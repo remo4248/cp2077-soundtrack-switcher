@@ -1,0 +1,50 @@
+# Builds prepare.exe and runs the checks that need no game data.
+#
+# Anything that reads the game's archives cannot run here - there is no game on a runner - so those
+# checks live inside bnk.py and generate.py and run when a maintainer regenerates the cue tree.
+name: build and check
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build prepare.exe
+        run: .\tools\prepare\build.bat
+
+      - name: Run checks
+        run: python tools\test_tools.py
+
+      - name: Build the release zips
+        run: python tools\package.py
+
+      # The patch mod needs a clone of AudioXL, so CI only proves our changes still apply cleanly.
+      - name: Check the AudioXL patch still applies
+        run: |
+          git clone --quiet https://github.com/DigitalVixenSWE/cp2077-audio-xl.git audioxl-check
+          cd audioxl-check
+          git checkout --quiet $(Get-Content ..\patches\audioxl-base-commit.txt).Split(' ')[0]
+          git apply --check ..\patches\audioxl-soundtrackswitcher.patch
+          Write-Host "patch applies cleanly"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: soundtrack-switcher
+          path: |
+            dist/*.zip
+            tools/prepare/build/prepare.exe
