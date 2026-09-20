@@ -1,0 +1,33 @@
+# Game-derived inputs and outputs: never redistributable, always regenerable
+tools/data/
+**/original.ogg
+**/replace.*
+**/*.cache.wav
+**/*.prepared.wav
+
+# Third-party clones and build output (our AudioXL changes live in patches/)
+/audioxl/
+tools/prepare/build/
+tools/prepare/*.obj
+/plugin/build/
+/plugin/deps/
+tools/*.exe
+tools/*.obj
+dist/
+
+# MO2 / local
+tmp_disabled/
+crashdumps/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# AudioXL's own starter download (third-party, not ours to redistribute)
+/README.txt
+/listOn.txt
+/records.audio_metadata
+/r6/storages/
+
+# Built by tools/prepare/build.bat and copied in at packaging time
+mod/red4ext/plugins/AudioXL/sounds/SoundtrackSwitcher/prepare.exe
