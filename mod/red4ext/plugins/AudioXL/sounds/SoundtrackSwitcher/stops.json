@@ -1,0 +1,870 @@
+{
+ "mus_ep1_credits_START": [
+  "mus_ep1_credits_STOP"
+ ],
+ "mus_game_menus_00_title_screen_START": [
+  "mus_game_menus_03_STOP"
+ ],
+ "mus_generic_sexcs_01_START": [
+  "mus_generic_sexcs_03_STOP"
+ ],
+ "mus_mainmenu_character_creation": [
+  "mus_mainmenu_stop"
+ ],
+ "mus_mainmenu_play": [
+  "mus_mainmenu_stop"
+ ],
+ "mus_mq001_emo_claire_01_loop_START": [
+  "mus_mq001_emo_claire_02_outro_STOP",
+  "mus_mq032_emo_claire_02_outro_STOP",
+  "mus_mq037_emo_brendan_02_STOP",
+  "mus_sq024_emo_claire_02_outro_STOP"
+ ],
+ "mus_mq011_gun_range_01_START": [
+  "mus_mq011_gun_range_02_STOP"
+ ],
+ "mus_mq012_01_chase_START": [
+  "mus_mq012_03_STOP",
+  "mus_sq023_04_STOP"
+ ],
+ "mus_mq013_zetatech_truck_02_START": [
+  "mus_mq013_zetatech_truck_04_STOP",
+  "mus_mq015_zetatech_truck_04_STOP",
+  "mus_sts_std_arr_12_zetatech_truck_04_STOP"
+ ],
+ "mus_mq014_zen_master_START": [
+  "mus_mq014_zen_master_STOP"
+ ],
+ "mus_mq015_zetatech_truck_01_START": [
+  "mus_mq013_zetatech_truck_04_STOP",
+  "mus_mq015_zetatech_truck_04_STOP",
+  "mus_sts_std_arr_12_zetatech_truck_04_STOP"
+ ],
+ "mus_mq017_vic_vega_01_START": [
+  "mus_mq017_vic_vega_03_STOP"
+ ],
+ "mus_mq019_nam_netrunner_01_START": [
+  "mus_mq019_nam_netrunner_04_STOP",
+  "mus_sts_wbr_jpn_05_nam_netrunner_04_STOP"
+ ],
+ "mus_mq021_jake_alive_START": [
+  "mus_mq021_jake_alive_STOP"
+ ],
+ "mus_mq021_warehouse_01_START": [
+  "mus_mq021_warehouse_03_STOP",
+  "mus_q112_warehouse_STOP_silent"
+ ],
+ "mus_mq022_maglev_01_START": [
+  "mus_mq022_maglev_03_STOP",
+  "mus_q114_maglev_03_03_outro_STOP"
+ ],
+ "mus_mq028_investigation_01_START": [
+  "mus_mq028_investigation_05_STOP"
+ ],
+ "mus_mq028_kill_01_START": [
+  "mus_mq028_kill_01_STOP",
+  "mus_q105_bd_netrunner_kill_end",
+  "mus_q105_bd_netrunner_kill_switch_to_edit_embed"
+ ],
+ "mus_mq029_randy_dead_01_START": [
+  "mus_mq029_randy_dead_02_STOP",
+  "mus_mq042_nomad_02_STOP",
+  "mus_sq021_road_to_farm_02_randy_alive_STOP",
+  "mus_sq021_road_to_farm_03_randy_dead_STOP"
+ ],
+ "mus_mq032_emo_claire_01_loop_START": [
+  "mus_mq001_emo_claire_02_outro_STOP",
+  "mus_mq032_emo_claire_02_outro_STOP",
+  "mus_mq037_emo_brendan_02_STOP",
+  "mus_sq024_emo_claire_02_outro_STOP"
+ ],
+ "mus_mq037_emo_brendan_01_START": [
+  "mus_mq001_emo_claire_02_outro_STOP",
+  "mus_mq032_emo_claire_02_outro_STOP",
+  "mus_mq037_emo_brendan_02_STOP",
+  "mus_sq024_emo_claire_02_outro_STOP"
+ ],
+ "mus_mq040_bar_01_START": [
+  "mus_mq040_bar_01_STOP",
+  "mus_sts_std_rcr_01_vic_vega_02_STOP"
+ ],
+ "mus_mq040_investigation_01_START": [
+  "mus_mq040_investigation_04_STOP",
+  "mus_sq006_investigation_05_outro_STOP"
+ ],
+ "mus_mq042_nomad_01_START": [
+  "mus_mq029_randy_dead_02_STOP",
+  "mus_mq042_nomad_02_STOP",
+  "mus_sq021_road_to_farm_02_randy_alive_STOP",
+  "mus_sq021_road_to_farm_03_randy_dead_STOP"
+ ],
+ "mus_mq055_hangouts_START": [
+  "mus_mq055_hangouts_STOP"
+ ],
+ "mus_mq301_paco_dead_START": [
+  "mus_mq301_paco_dead_STOP"
+ ],
+ "mus_mq301_yuri_combat_START": [
+  "mus_mq301_yuri_combat_STOP"
+ ],
+ "mus_mq303_lina_malina_1_START": [
+  "mus_mq303_lina_malina_STOP"
+ ],
+ "mus_mq303_lina_malina_2_START": [
+  "mus_mq303_lina_malina_STOP"
+ ],
+ "mus_mq304_bennet_combat_START": [
+  "mus_mq304_bennet_combat_STOP"
+ ],
+ "mus_mq304_briefing_01_START": [
+  "mus_mq304_briefing_02_STOP"
+ ],
+ "mus_mq304_jago_confrontation_START": [
+  "mus_mq304_jago_confrontation_02_STOP",
+  "mus_mq304_jago_confrontation_04_STOP",
+  "mus_mq304_jago_confrontation_05_STOP",
+  "mus_mq304_jago_confrontation_06_STOP"
+ ],
+ "mus_mq304_wake_START": [
+  "mus_mq304_wake_STOP_01",
+  "mus_mq304_wake_STOP_02"
+ ],
+ "mus_mq305_standoff_01_START": [
+  "mus_mq305_standoff_02_STOP"
+ ],
+ "mus_mq305_underground_01_START": [
+  "mus_mq305_underground_03_STOP"
+ ],
+ "mus_mq306_aaron_dead_START_STOP": [
+  "mus_mq306_aaron_dead_START_STOP",
+  "mus_mq306_aaron_dead_STOP"
+ ],
+ "mus_q000_corpo_inside_arasaka_00_intro_START": [
+  "mus_q000_corpo_inside_arasaka_03_outro_STOP"
+ ],
+ "mus_q000_corpo_nc_vista_START_STOP": [
+  "mus_q000_corpo_nc_vista_START_STOP",
+  "mus_q203_delamain_flight_STOP",
+  "mus_sq032_tapeworm_q113_attack_START_STOP"
+ ],
+ "mus_q000_half_year_montage_START": [
+  "mus_q000_half_year_montage_STOP"
+ ],
+ "mus_q000_nomad_city_of_dreams_START": [
+  "mus_q000_nomad_city_of_dreams_STOP"
+ ],
+ "mus_q000_sk_padre_part1": [
+  "mus_q000_sk_padre_end"
+ ],
+ "mus_q000_tutorial_START": [
+  "mus_q000_tutorial_STOP"
+ ],
+ "mus_q001_girl_START": [
+  "mus_q001_girl_trauma_team_STOP"
+ ],
+ "mus_q001_v_meets_dex_01_START_intro_dialogue_choice": [
+  "mus_q001_v_meets_dex_05_STOP_end_silent",
+  "mus_q305_planning_STOP_TEMP"
+ ],
+ "mus_q003_corpo_woman_00_START_pre_intro": [
+  "mus_q003_corpo_woman_03_STOP_end"
+ ],
+ "mus_q003_inside_allfoods_START": [
+  "mus_q003_inside_allfoods_STOP"
+ ],
+ "mus_q004_bd_edit_mode_start": [
+  "mus_q004_bd_edit_mode_stop",
+  "mus_q012_bd_edit_mode_stop",
+  "mus_q105_bd_netrunner_kill_end",
+  "mus_sq021_bd_edit_mode_stop"
+ ],
+ "mus_q004_bd_konpeki_start": [
+  "mus_q004_bd_konpeki_stop"
+ ],
+ "mus_q004_bd_robbery_00_start_bd": [
+  "mus_q004_bd_robbery_02_robber_killed"
+ ],
+ "mus_q004_judy_briefs_about_bd_part01": [
+  "mus_q004_judy_briefs_about_bd_stop"
+ ],
+ "mus_q005_as_drones_START": [
+  "mus_q005_as_drones_STOP"
+ ],
+ "mus_q005_dex_confrontation_01_p1": [
+  "mus_q005_dex_confrontation_05_gunshot_end"
+ ],
+ "mus_q005_getting_into_START": [
+  "mus_q005_getting_into_STOP"
+ ],
+ "mus_q005_getting_to_dex_start": [
+  "mus_q005_getting_to_dex_stop"
+ ],
+ "mus_q005_infiltration_START": [
+  "mus_q005_infiltration_STOP"
+ ],
+ "mus_q005_inside_konpeki_START": [
+  "mus_q005_inside_konpeki_STOP"
+ ],
+ "mus_q005_jackie_START": [
+  "mus_q005_jackie_STOP"
+ ],
+ "mus_q005_saburo_01_START": [
+  "mus_q005_gettiing_out_outro"
+ ],
+ "mus_q012_bd_edit_mode_start": [
+  "mus_q004_bd_edit_mode_stop",
+  "mus_q012_bd_edit_mode_stop",
+  "mus_q105_bd_netrunner_kill_end",
+  "mus_sq021_bd_edit_mode_stop"
+ ],
+ "mus_q101_arasaka_raid_00_chopper_START": [
+  "mus_q101_arasaka_raid_07_as_outro_STOP",
+  "mus_q101_arasaka_raid_post_event_stop"
+ ],
+ "mus_q101_js_death_01_START": [
+  "mus_q101_js_death_03_STOP",
+  "mus_q101_js_death_04_STOP_02"
+ ],
+ "mus_q101_js_interrogation_01_START": [
+  "mus_q101_js_interrogation_02_STOP"
+ ],
+ "mus_q101_resurrection_01_dream_START": [
+  "mus_q101_resurrection_03_outro_STOP"
+ ],
+ "mus_q101_v_landfill_01_START": [
+  "mus_q101_v_landfill_03_STOP"
+ ],
+ "mus_q101_v_vs_johnny_01_START": [
+  "mus_q101_v_vs_johnny_07_STOP"
+ ],
+ "mus_q103_panam_START": [
+  "mus_q103_panam_STOP"
+ ],
+ "mus_q103_road_to_ghost_town_START": [
+  "mus_q103_road_to_ghost_town_STOP"
+ ],
+ "mus_q104_av_01_introloop_START": [
+  "mus_q104_av_05_outro_STOP"
+ ],
+ "mus_q104_drone_flight_01_START": [
+  "mus_q104_drone_flight_02_STOP"
+ ],
+ "mus_q104_hellman_01_START": [
+  "mus_q104_hellman_02_STOP"
+ ],
+ "mus_q104_mitch_hostage_01_START": [
+  "mus_q104_mitch_hostage_02_STOP"
+ ],
+ "mus_q105_bd_brigitte_call_start": [
+  "mus_q105_bd_brigitte_call_end"
+ ],
+ "mus_q105_bd_netrunner_kill_start": [
+  "mus_mq028_kill_01_STOP",
+  "mus_q105_bd_netrunner_kill_end",
+  "mus_q105_bd_netrunner_kill_switch_to_edit_embed"
+ ],
+ "mus_q105_bd_voodoo_start": [
+  "mus_q105_bd_voodoo_end"
+ ],
+ "mus_q105_dollhouse_START": [
+  "mus_q105_woodman_outro_STOP"
+ ],
+ "mus_q105_dollhouse_doll_session_START": [
+  "mus_q105_dollhouse_doll_session_STOP"
+ ],
+ "mus_q105_judy_stinger_START_delayedSTOP": [
+  "mus_q105_judy_stinger_START_delayedSTOP"
+ ],
+ "mus_q108_alt_01_START": [
+  "mus_q108_alt_04_STOP"
+ ],
+ "mus_q108_alt_sex_01_START": [
+  "mus_q108_alt_sex_03_STOP"
+ ],
+ "mus_q108_arasaka_raid_02_01_START": [
+  "mus_q108_arasaka_raid_02_05_outro_STOP"
+ ],
+ "mus_q108_atlantis_01_rouge_START": [
+  "mus_q108_atlantis_06_outro_STOP"
+ ],
+ "mus_q108_thompson_START": [
+  "mus_q108_thompson_STOP"
+ ],
+ "mus_q110_brigitte_01": [
+  "mus_q110_brigitte_STOP",
+  "mus_q110_brigitte_outro"
+ ],
+ "mus_q110_chippinin_START": [
+  "mus_q110_chippinin_STOP"
+ ],
+ "mus_q110_chippinin_START_PUBLIC": [
+  "mus_q110_chippinin_STOP_PUBLIC"
+ ],
+ "mus_q110_cinema_country": [
+  "mus_q110_cinema_country_STOP"
+ ],
+ "mus_q110_exit_the_chapel_01_pre_combat_START": [
+  "mus_q110_exit_the_chapel_03_outro_STOP"
+ ],
+ "mus_q110_maglev_01_START_intro": [
+  "mus_q110_maglev_06_STOP"
+ ],
+ "mus_q110_netwatch_01_dialogue": [
+  "mus_q110_netwatch_03_v_dies",
+  "mus_q110_netwatch_05_dlg_end_peaceful_resolution"
+ ],
+ "mus_q110_voodooboys_den_01_START_intro": [
+  "mus_q110_voodooboys_den_06_STOP_outro_to_silence"
+ ],
+ "mus_q112_conversation_with_oda_START": [
+  "mus_q112_conversation_with_oda_STOP"
+ ],
+ "mus_q112_hanako_arasaka_assault_01_START": [
+  "mus_q112_hanako_arasaka_assault_03_STOP"
+ ],
+ "mus_q112_hanako_proxy_START": [
+  "mus_q112_hanako_proxy_STOP"
+ ],
+ "mus_q112_oda_cmb_intro": [
+  "mus_q112_oda_cmb_end"
+ ],
+ "mus_q112_reconnaissance_01_loop_START": [
+  "mus_q112_reconnaissance_02_outro_STOP"
+ ],
+ "mus_q112_wakako_briefing_START": [
+  "mus_q112_wakako_briefing_STOP"
+ ],
+ "mus_q113_arasaka_estate_START": [
+  "mus_q113_arasaka_estate_STOP"
+ ],
+ "mus_q113_board_meeting_START": [
+  "mus_q113_tower_lockdown_adam_smasher_STOP"
+ ],
+ "mus_q113_hanako_yorinobou_START": [
+  "mus_q113_hanako_yorinobou_STOP"
+ ],
+ "mus_q113_saburo_01_START": [
+  "mus_q113_saburo_02_STOP",
+  "mus_sq032_tapeworm_q113_attack_START_STOP"
+ ],
+ "mus_q114_aldecaldos_01_START": [
+  "mus_q114_aldecaldos_05_STOP"
+ ],
+ "mus_q114_nomad_bard_01_song_start_stop": [
+  "mus_q114_nomad_bard_01_song_12_stop",
+  "mus_q114_nomad_bard_01_song_start_stop",
+  "mus_q114_nomad_bard_01_song_start_stop_p1"
+ ],
+ "mus_q114_nomad_bard_01_song_start_stop_p1": [
+  "mus_q114_nomad_bard_01_song_12_stop",
+  "mus_q114_nomad_bard_01_song_start_stop",
+  "mus_q114_nomad_bard_01_song_start_stop_p1"
+ ],
+ "mus_q114_nomad_bard_02_black_dog_01_start": [
+  "mus_q114_nomad_bard_02_black_dog_06_stop"
+ ],
+ "mus_q114_nomad_bard_03_panam_01_start": [
+  "mus_q114_nomad_bard_03_panam_09_stop"
+ ],
+ "mus_q114_nomad_bard_song_full_track_start": [
+  "mus_q114_nomad_bard_song_full_track_stop"
+ ],
+ "mus_q114_panam_01_START": [
+  "mus_q114_panam_02_STOP"
+ ],
+ "mus_q114_panzer_ride_01_START": [
+  "mus_q114_panzer_ride_02_STOP"
+ ],
+ "mus_q114_saul_briefing_01_START": [
+  "mus_q114_saul_briefing_02_STOP"
+ ],
+ "mus_q114_tower_lockdown_START": [
+  "mus_q114_tower_lockdown_STOP"
+ ],
+ "mus_q115_av_flight_01_START": [
+  "mus_q115_av_flight_04_STOP",
+  "mus_q115_av_flight_stop_embedded"
+ ],
+ "mus_q115_cyber_alt_01_START": [
+  "mus_q115_cyber_alt_02_outro1",
+  "mus_q115_cyber_alt_02_outro2"
+ ],
+ "mus_q115_going_solo_adam_smasher_START": [
+  "mus_q115_going_solo_adam_smasher_STOP"
+ ],
+ "mus_q115_inside_mikoshi_01_START": [
+  "mus_q115_inside_mikoshi_02_STOP"
+ ],
+ "mus_q115_mikoshi_START": [
+  "mus_q115_mikoshi_STOP"
+ ],
+ "mus_q115_pills_01_START": [
+  "mus_q115_pills_02_STOP",
+  "mus_q115_pills_02_STOP_suicide",
+  "mus_q115_pills_06_embedded_end"
+ ],
+ "mus_q115_ripperdoc_01_START": [
+  "mus_q115_ripperdoc_02_STOP"
+ ],
+ "mus_q115_rogue_briefing_01_START": [
+  "mus_q115_rogue_briefing_03_STOP"
+ ],
+ "mus_q115_rooftop_suicide_START": [
+  "mus_q115_rooftop_suicide_STOP"
+ ],
+ "mus_q116_v_johnny_goodbye_part1": [
+  "mus_q116_v_johnny_goodbye_end_going_ai",
+  "mus_q116_v_johnny_goodbye_end_sarcophagus",
+  "mus_q116_v_johnny_goodbye_part2_END",
+  "mus_q201_v_johnny_goodbye_stop"
+ ],
+ "mus_q201_dark_hospital_01_loop_START": [
+  "mus_q201_dark_hospital_02_outro_STOP",
+  "mus_q201_dark_hospital_04_jackie_stinger_STOP"
+ ],
+ "mus_q201_going_crazy_01_calm_START": [
+  "mus_q201_going_crazy_03_END"
+ ],
+ "mus_q201_the_end_going_home_START_STOP": [
+  "mus_q201_the_end_going_home_START_STOP"
+ ],
+ "mus_q201_the_end_going_on_ice_START": [
+  "mus_q201_the_end_going_on_ice_STOP"
+ ],
+ "mus_q201_v_johnny_goodbye_start": [
+  "mus_q116_v_johnny_goodbye_end_going_ai",
+  "mus_q116_v_johnny_goodbye_end_sarcophagus",
+  "mus_q116_v_johnny_goodbye_part2_END",
+  "mus_q201_v_johnny_goodbye_stop"
+ ],
+ "mus_q202_border_crossing_START": [
+  "mus_q202_border_crossing_end_cs_STOP"
+ ],
+ "mus_q202_goodbye_lover_START": [
+  "mus_q202_goodbye_lover_STOP"
+ ],
+ "mus_q203_delamain_flight_START": [
+  "mus_q000_corpo_nc_vista_START_STOP",
+  "mus_q203_delamain_flight_STOP",
+  "mus_sq032_tapeworm_q113_attack_START_STOP"
+ ],
+ "mus_q203_in_the_shuttle": [
+  "mus_q203_legend"
+ ],
+ "mus_q204_columbarium_pay_START": [
+  "mus_q204_columbarium_end_cs_STOP"
+ ],
+ "mus_q301_meet_songbird_01_START": [
+  "mus_q301_meet_songbird_04_STOP"
+ ],
+ "mus_q301_militia_combo_START": [
+  "mus_q301_militia_combo_STOP",
+  "mus_q302_somi_hacking_chimera"
+ ],
+ "mus_q301_under_combat_zone_START": [
+  "mus_q301_under_combat_zone_STOP"
+ ],
+ "mus_q302_call_red_cp_START": [
+  "mus_q302_call_red_STOP"
+ ],
+ "mus_q302_call_red_w3_START": [
+  "mus_q302_call_red_STOP"
+ ],
+ "mus_q302_call_reed_START_STOP": [
+  "mus_q302_call_reed_START_STOP",
+  "mus_q302_call_reed_STOP"
+ ],
+ "mus_q302_chimera_01_START": [
+  "mus_q302_chimera_05_STOP"
+ ],
+ "mus_q302_crashsite_vista_START": [
+  "mus_q302_crashsite_vista_STOP"
+ ],
+ "mus_q302_meet_reed_01_START": [
+  "mus_q302_meet_reed_02_STOP"
+ ],
+ "mus_q302_oath_01_START": [
+  "mus_e3demo_end_long_START",
+  "mus_q302_oath_03_STOP"
+ ],
+ "mus_q302_squot_01_START": [
+  "mus_q302_squot_02_STOP",
+  "mus_q302_squot_04_STOP",
+  "mus_q302_squot_05_STOP",
+  "mus_q302_squot_06_STOP"
+ ],
+ "mus_q303_baron_01_START": [
+  "mus_q303_baron_05_STOP"
+ ],
+ "mus_q303_baron_04": [
+  "mus_q303_baron_05_STOP"
+ ],
+ "mus_q303_exit_bs_START": [
+  "mus_q303_exit_bs_STOP"
+ ],
+ "mus_q303_hacking_severins_01_START": [
+  "mus_q303_hacking_severins_03_STOP"
+ ],
+ "mus_q303_old_friends_01_START": [
+  "mus_q303_old_friends_04_STOP"
+ ],
+ "mus_q303_reed_emo_planning_01_START": [
+  "mus_q303_reed_emo_planning_03_STOP"
+ ],
+ "mus_q303_restaurant_01_START": [
+  "mus_q303_restaurant_02_STOP"
+ ],
+ "mus_q303_somi_and_reed_01_START": [
+  "mus_q303_somi_and_reed_04_STOP"
+ ],
+ "mus_q303_technical_path_infiltration_START": [
+  "mus_q303_technical_path_infiltration_STOP"
+ ],
+ "mus_q303_tunnels_START": [
+  "mus_q303_tunnels_STOP"
+ ],
+ "mus_q304_alex_heart_to_heart_01_START": [
+  "mus_q304_alex_heart_to_heart_03_STOP"
+ ],
+ "mus_q304_car_hijack_01_START": [
+  "mus_q304_car_hijack_06_STOP"
+ ],
+ "mus_q304_inside_the_stadium_START": [
+  "mus_q304_inside_the_stadium_STOP"
+ ],
+ "mus_q304_kurt_suspense_START": [
+  "mus_q304_kurt_suspense_04_STOP",
+  "mus_q304_kurt_suspense_05_STOP_silent"
+ ],
+ "mus_q304_planning_START": [
+  "mus_q304_planning_STOP"
+ ],
+ "mus_q304_ripper_reed_convo_START": [
+  "mus_q304_ripper_reed_convo_STOP"
+ ],
+ "mus_q304_somi_goes_berserk_01_START": [
+  "mus_q304_somi_goes_berserk_04_STOP"
+ ],
+ "mus_q304_somis_confession_01_START": [
+  "mus_q304_somis_confession_03_STOP"
+ ],
+ "mus_q304_stadium_START": [
+  "mus_q304_stadium_STOP"
+ ],
+ "mus_q305_contact_with_somi_START": [
+  "mus_q305_contact_with_somi_STOP"
+ ],
+ "mus_q305_kill_somi_01_START": [
+  "mus_q305_kill_somi_06_STOP"
+ ],
+ "mus_q305_looking_for_somi_START": [
+  "mus_q305_looking_for_somi_STOP"
+ ],
+ "mus_q305_max_tac_convoy_01_START": [
+  "mus_q305_max_tac_convoy_04_STOP"
+ ],
+ "mus_q305_planning_START_TEMP": [
+  "mus_q001_v_meets_dex_05_STOP_end_silent",
+  "mus_q305_planning_STOP_TEMP"
+ ],
+ "mus_q305_reed_epilogue_START": [
+  "mus_q305_reed_epilogue_STOP"
+ ],
+ "mus_q305_reed_final_talk_START": [
+  "mus_q305_reed_final_talk_STOP"
+ ],
+ "mus_q306_01_ride_to_the_rocket_01_START": [
+  "mus_q306_05_reed_standoff_03"
+ ],
+ "mus_q306_drive_to_spaceport_START": [
+  "mus_q306_drive_to_spaceport_STOP"
+ ],
+ "mus_q306_gas_station_START": [
+  "mus_q306_gas_station_STOP"
+ ],
+ "mus_q306_gift_from_somi_01_START_STOP": [
+  "mus_q306_gift_from_somi_01_START_STOP"
+ ],
+ "mus_q306_lunar_final_01_START": [
+  "mus_q306_lunar_final_08_STOP"
+ ],
+ "mus_q306_spaceport_combo_START": [
+  "mus_q306_spaceport_combo_STOP"
+ ],
+ "mus_q307_after_viktor_START": [
+  "mus_q307_after_viktor_STOP"
+ ],
+ "mus_q307_av_flight_START": [
+  "mus_q307_av_flight_STOP"
+ ],
+ "mus_q307_coma_START": [
+  "mus_q307_coma_STOP"
+ ],
+ "mus_q307_outro_cs_START": [
+  "mus_q307_outro_cs_STOP"
+ ],
+ "mus_secret_room_START": [
+  "mus_secret_room_STOP"
+ ],
+ "mus_sq004_car_chase_01_START": [
+  "mus_sq004_car_chase_02_STOP"
+ ],
+ "mus_sq004_safehouse_01_START": [
+  "mus_sq004_safehouse_02_STOP"
+ ],
+ "mus_sq006_accesing_truck_01_START": [
+  "mus_sq006_accesing_truck_02_STOP"
+ ],
+ "mus_sq006_investigation_01_START": [
+  "mus_mq040_investigation_04_STOP",
+  "mus_sq006_investigation_05_outro_STOP"
+ ],
+ "mus_sq006_jefferson_peralez_01_START": [
+  "mus_sq006_jefferson_peralez_02_STOP"
+ ],
+ "mus_sq006_van_ambush_01_START": [
+  "mus_sq006_van_ambush_03_STOP"
+ ],
+ "mus_sq011_js_shreds_START": [
+  "mus_sq011_js_shreds_STOP"
+ ],
+ "mus_sq011_kerry_villa_START": [
+  "mus_sq011_kerry_villa_STOP"
+ ],
+ "mus_sq011_totentanz_01_START": [
+  "mus_sq011_totentanz_STOP"
+ ],
+ "mus_sq012_01_info_START": [
+  "mus_sq012_04_outro_STOP"
+ ],
+ "mus_sq012_bd_calm_START": [
+  "mus_sq012_bd_calm_STOP",
+  "mus_sq012_bd_tense_STOP",
+  "mus_sq021_bd_calm_STOP",
+  "mus_sq021_bd_tense_STOP"
+ ],
+ "mus_sq012_confronting_han_01_START": [
+  "mus_sq012_confronting_han_02_STOP"
+ ],
+ "mus_sq012_tygerclaws_standoff_01_dialogue": [
+  "mus_sq012_tygerclaws_standoff_03_end_SILENCE"
+ ],
+ "mus_sq017_pon_pon_caliente_START": [
+  "mus_sq017_pon_pon_caliente_STOP"
+ ],
+ "mus_sq017_truck_ambush_01_START": [
+  "mus_sq017_truck_ambush_04_STOP"
+ ],
+ "mus_sq018_jackie_START_STOP": [
+  "mus_sq018_jackie_START_STOP"
+ ],
+ "mus_sq021_bd_calm_START": [
+  "mus_sq012_bd_calm_STOP",
+  "mus_sq012_bd_tense_STOP",
+  "mus_sq021_bd_calm_STOP",
+  "mus_sq021_bd_tense_STOP"
+ ],
+ "mus_sq021_bd_edit_mode_start": [
+  "mus_q004_bd_edit_mode_stop",
+  "mus_q012_bd_edit_mode_stop",
+  "mus_q105_bd_netrunner_kill_end",
+  "mus_sq021_bd_edit_mode_stop"
+ ],
+ "mus_sq021_lab_01_START": [
+  "mus_sq021_lab_03_STOP"
+ ],
+ "mus_sq021_randy_room_01_START": [
+  "mus_sq021_randy_room_02_STOP"
+ ],
+ "mus_sq021_river_car_ride_01_START_STOP": [
+  "mus_sq021_river_car_ride_01_START_STOP"
+ ],
+ "mus_sq021_road_to_farm_01_START": [
+  "mus_mq029_randy_dead_02_STOP",
+  "mus_mq042_nomad_02_STOP",
+  "mus_sq021_road_to_farm_02_randy_alive_STOP",
+  "mus_sq021_road_to_farm_03_randy_dead_STOP"
+ ],
+ "mus_sq023_01_chase_START": [
+  "mus_mq012_03_STOP",
+  "mus_sq023_04_STOP"
+ ],
+ "mus_sq023_joshuas_end_01_START": [
+  "mus_sq023_joshuas_end_02_crucifix_STOP",
+  "mus_sq023_joshuas_end_02_no_crucifix_STOP"
+ ],
+ "mus_sq023_meet_joshua_01_START": [
+  "mus_sq023_meet_joshua_02_STOP"
+ ],
+ "mus_sq024_badlands_START": [
+  "mus_sq024_race_STOP"
+ ],
+ "mus_sq024_city_centre_START": [
+  "mus_sq024_race_STOP"
+ ],
+ "mus_sq024_claire_vs_sampson_01_START": [
+  "mus_sq024_claire_vs_sampson_02_death_outro_STOP",
+  "mus_sq024_claire_vs_sampson_03_life_outro_STOP",
+  "mus_sq024_sts_wat_kab_08_STOP"
+ ],
+ "mus_sq024_emo_claire_01_loop_START": [
+  "mus_mq001_emo_claire_02_outro_STOP",
+  "mus_mq032_emo_claire_02_outro_STOP",
+  "mus_mq037_emo_brendan_02_STOP",
+  "mus_sq024_emo_claire_02_outro_STOP"
+ ],
+ "mus_sq024_santo_domingo_START": [
+  "mus_sq024_race_STOP"
+ ],
+ "mus_sq024_the_big_race_START": [
+  "mus_sq024_race_STOP"
+ ],
+ "mus_sq025_angry_delamain_01_START": [
+  "mus_sq025_angry_delamain_02_STOP"
+ ],
+ "mus_sq025_shy_delamain_01_START": [
+  "mus_sq025_shy_delamain_02_STOP"
+ ],
+ "mus_sq025_sociopath_delamain_01_START": [
+  "mus_sq025_sociopath_delamain_02_STOP"
+ ],
+ "mus_sq026_evelyn_dead_START": [
+  "mus_sq026_evelyn_dead_STOP"
+ ],
+ "mus_sq026_investigation_START": [
+  "mus_sq026_investigation_STOP"
+ ],
+ "mus_sq026_judy_START": [
+  "mus_sq026_judy_STOP"
+ ],
+ "mus_sq026_tg_encounter_01_woodman": [
+  "mus_sq026_tg_encounter_04_end_SILENT"
+ ],
+ "mus_sq027_control_tower_01_START": [
+  "mus_sq027_control_tower_03_STOP"
+ ],
+ "mus_sq027_panam_01_START": [
+  "mus_sq027_panam_02_STOP"
+ ],
+ "mus_sq027_panam_csex_01_pre_sex_START": [
+  "mus_sq027_panam_csex_03_STOP"
+ ],
+ "mus_sq028_07_kerry_hum_start": [
+  "mus_sq028_07_kerry_hum_stop"
+ ],
+ "mus_sq028_kerry_destruction_01_START": [
+  "mus_sq028_kerry_destruction_035_no_sex_outro_STOP",
+  "mus_sq028_kerry_destruction_03_choice_nay_STOP"
+ ],
+ "mus_sq028_kerry_destruction_04_csex_START": [
+  "mus_sq028_kerry_destruction_05_getting_out_START"
+ ],
+ "mus_sq028_kerry_destruction_05_getting_out_START": [
+  "mus_sq028_kerry_destruction_05_getting_out_START"
+ ],
+ "mus_sq029_emo_river_01_loop_START": [
+  "mus_sq029_emo_river_02_outro_STOP"
+ ],
+ "mus_sq029_river_rooftop_01_loop_START": [
+  "mus_sq029_river_rooftop_02_outro_STOP",
+  "mus_sq029_river_rooftop_03_sex_outro_STOP"
+ ],
+ "mus_sq029_vr_game_01_loop_START": [
+  "mus_sq029_vr_game_04_game_STOP"
+ ],
+ "mus_sq030_judy_csex_START": [
+  "mus_sq030_judy_csex_STOP"
+ ],
+ "mus_sq030_underwater_town_01_loop_START": [
+  "mus_sq030_underwater_town_02_STOP"
+ ],
+ "mus_sq031_cmf_01_START": [
+  "mus_sq031_cmf_09_after_crash_STOP"
+ ],
+ "mus_sq031_js_funeral_01_START": [
+  "mus_sq031_js_funeral_03_STOP"
+ ],
+ "mus_sq031_rogue_csex_01_bushido_x_START": [
+  "mus_sq031_rogue_csex_03_STOP"
+ ],
+ "mus_sq032_tapeworm_03_START": [
+  "mus_sq032_tapeworm_03_STOP"
+ ],
+ "mus_sq032_tapeworm_04_START": [
+  "mus_sq032_tapeworm_04_STOP"
+ ],
+ "mus_sq032_tapeworm_05_START": [
+  "mus_sq032_tapeworm_05_STOP"
+ ],
+ "mus_sq032_tapeworm_attack_incoming_START": [
+  "mus_sq032_tapeworm_attack_incoming_STOP",
+  "mus_sq032_tapeworm_q113_attack_START_STOP",
+  "mus_sq032_tapeworm_q114_attack_embedded",
+  "mus_sq032_tapeworm_q116_attack_stop_drone"
+ ],
+ "mus_sq032_tapeworm_q113_attack_START_STOP": [
+  "mus_sq032_tapeworm_q113_attack_START_STOP"
+ ],
+ "mus_sq032_tapeworm_q114_attack_embedded": [
+  "mus_sq032_tapeworm_q114_attack_embedded"
+ ],
+ "mus_sq032_tapeworm_q115_attack_START": [
+  "mus_sq032_tapeworm_q115_attack_STOP"
+ ],
+ "mus_sq032_tapeworm_q115_attack_more_tension": [
+  "mus_sq032_tapeworm_q115_attack_STOP"
+ ],
+ "mus_sq032_tapeworm_q116_attack_START": [
+  "mus_sq032_tapeworm_q116_attack_STOP"
+ ],
+ "mus_sq032_tapeworm_sixth_enc_01_START": [
+  "mus_sq032_tapeworm_sixth_enc_02_STOP"
+ ],
+ "mus_stout_sexcs_01_START": [
+  "mus_stout_sexcs_03_STOP"
+ ],
+ "mus_sts_ep1_08_01_START": [
+  "mus_sts_ep1_08_04_STOP"
+ ],
+ "mus_sts_hey_gle_01_tucker_albach_01_START": [
+  "mus_sts_hey_gle_01_tucker_albach_02_STOP"
+ ],
+ "mus_sts_hey_gle_05_elgallo_01_START": [
+  "mus_sts_hey_gle_05_elgallo_04_STOP"
+ ],
+ "mus_sts_hey_rey_01_gustavos_story_START_STOP": [
+  "mus_sts_hey_rey_01_gustavos_story_START_STOP"
+ ],
+ "mus_sts_std_arr_12_zetatech_truck_01_START": [
+  "mus_mq013_zetatech_truck_04_STOP",
+  "mus_mq015_zetatech_truck_04_STOP",
+  "mus_sts_std_arr_12_zetatech_truck_04_STOP"
+ ],
+ "mus_sts_std_rcr_01_vic_vega_01_START": [
+  "mus_mq040_bar_01_STOP",
+  "mus_sts_std_rcr_01_vic_vega_02_STOP"
+ ],
+ "mus_sts_std_rcr_03_lawyer_extraction_01_START": [
+  "mus_sts_std_rcr_03_lawyer_extraction_02_STOP"
+ ],
+ "mus_sts_wat_kab_03_cpl_hore_meds_01_START": [
+  "mus_sts_wat_kab_03_cpl_hore_meds_03_STOP"
+ ],
+ "mus_sts_wat_nid_04_bd_editors_01_START": [
+  "mus_sts_wat_nid_04_bd_editors_STOP_meta"
+ ],
+ "mus_sts_wat_nid_07_facing_aaron_01_START": [
+  "mus_sts_wat_nid_07_facing_aaron_03_combat_outro_STOP",
+  "mus_sts_wat_nid_07_facing_aaron_04_soft_outro_STOP"
+ ],
+ "mus_sts_wat_nid_12_max_01_START": [
+  "mus_sts_wat_nid_12_max_03_STOP"
+ ],
+ "mus_sts_wbr_jpn_05_nam_netrunner_01_START": [
+  "mus_mq019_nam_netrunner_04_STOP",
+  "mus_sts_wbr_jpn_05_nam_netrunner_04_STOP"
+ ],
+ "mus_sts_wbr_jpn_09_chase_START": [
+  "mus_sts_wbr_jpn_09_chase_STOP"
+ ]
+}
