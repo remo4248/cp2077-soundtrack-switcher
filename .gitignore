@@ -31,3 +31,6 @@ __pycache__/
 
 # Built by tools/prepare/build.bat and copied in at packaging time
 mod/red4ext/plugins/AudioXL/sounds/SoundtrackSwitcher/prepare.exe
+
+# AudioXL's own download, unpacked here for reference
+/red4ext/
