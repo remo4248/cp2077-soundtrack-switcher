@@ -39,7 +39,9 @@ jobs:
           git clone --quiet https://github.com/DigitalVixenSWE/cp2077-audio-xl.git audioxl-check
           cd audioxl-check
           git checkout --quiet $(Get-Content ..\patches\audioxl-base-commit.txt).Split(' ')[0]
-          git apply --check ..\patches\audioxl-soundtrackswitcher.patch
+          git apply ..\patches\audioxl-soundtrackswitcher.patch
+          cd ..
+          python tools\check_patch.py audioxl-check
           Write-Host "patch applies and brings every file it references"
 
       - uses: actions/upload-artifact@v4
