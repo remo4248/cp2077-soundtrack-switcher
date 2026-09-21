@@ -9,7 +9,8 @@ Soundtrack Switcher needs:
   PlayingRows one call that returns what is currently playing, instead of asking per sound
 
 Install AFTER AudioXL so these files win. Everything else in AudioXL is unchanged,
-and the source of this build is at https://github.com/DigitalVixenSWE/cp2077-audio-xl (MIT).
+and the source of this build is at https://github.com/DigitalVixenSWE/cp2077-audio-xl.
+AudioXL is MIT licensed; its licence is in AudioXL-LICENSE.md next to this file.
 
 These changes are being offered to AudioXL's author. Once they are in an official release,
 remove this patch and keep the official AudioXL.

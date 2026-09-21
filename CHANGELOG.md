@@ -2,7 +2,7 @@
 
 All notable changes to Soundtrack Switcher, newest first.
 
-## [Unreleased]
+## [0.2.0] - 2026-09-21
 
 ### Changed
 - A replacement can be called anything. Any audio file in a cue folder is the
@@ -13,6 +13,8 @@ All notable changes to Soundtrack Switcher, newest first.
 - Looping is now a name ending in `.loop`, e.g. `My Song.loop.mp3`.
 
 ### Fixed
+- The session line in the log always said "watching 0 cue(s)": it counted the
+  cue list inline rather than through a local, as the working call sites do.
 - The 26 cues with no stop event wrote `stopOn: [null]` instead of nothing, and
   the run never warned that those tracks end only when the next cue starts.
 

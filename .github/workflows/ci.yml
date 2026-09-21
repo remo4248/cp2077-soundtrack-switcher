@@ -6,7 +6,7 @@ name: build and check
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
     tags: ['v*']
   pull_request:
   workflow_dispatch:
