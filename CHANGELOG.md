@@ -2,6 +2,20 @@
 
 All notable changes to Soundtrack Switcher, newest first.
 
+## [Unreleased]
+
+### Changed
+- A replacement can be called anything. Any audio file in a cue folder is the
+  replacement, so tracks no longer have to be renamed to `replace.mp3`.
+  Existing folders keep working. `original.*` is never a replacement, and the
+  prepared copy is named after the track, so swapping tracks cannot leave the
+  old one playing.
+- Looping is now a name ending in `.loop`, e.g. `My Song.loop.mp3`.
+
+### Fixed
+- The 26 cues with no stop event wrote `stopOn: [null]` instead of nothing, and
+  the run never warned that those tracks end only when the next cue starts.
+
 ## [0.1.0] - 2026-09-21
 
 First working version. Two mods: **Soundtrack Switcher** (install this) and

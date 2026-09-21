@@ -3,7 +3,7 @@ verified by the self-checks inside bnk.py and generate.py, which run when those 
 
 Usage: python tools/test_tools.py
 """
-import os, struct, subprocess, sys, tempfile, wave
+import glob, json, os, shutil, struct, subprocess, sys, tempfile, wave
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from generate import EXCLUDE, display_name, fmt, folder_name, quest_of
@@ -64,13 +64,79 @@ def test_prepare_normalises(prepare):
         assert peak_of(out) > peak_of(src), 'a quiet input should have been raised'
 
 
+RESCAN = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'mod', 'red4ext', 'plugins',
+                      'AudioXL', 'sounds', 'SoundtrackSwitcher', 'rescan.ps1')
+
+
+def run_rescan(tmp, folders):
+    """A throwaway copy of the mod tree: drop the given files in each cue folder, run rescan, read
+    back what it decided to play. prepare.exe is not copied in, so the files stay untouched."""
+    root = os.path.join(tmp, 'red4ext', 'plugins', 'AudioXL', 'sounds', 'SoundtrackSwitcher')
+    for folder, files in folders.items():
+        d = os.path.join(root, 'q000 - Test', folder)
+        os.makedirs(d, exist_ok=True)
+        for f in files:
+            open(os.path.join(d, f), 'wb').close()
+    cues = [os.path.basename(d).split(' ')[0] + '_START'
+            for d in glob.glob(os.path.join(root, '*', 'mus_*'))] +            [folder.split(' ')[0] + '_START' for folder in folders]
+    os.makedirs(root, exist_ok=True)
+    with open(os.path.join(root, 'cues.json'), 'w') as f:
+        json.dump(cues, f)
+    shutil.copy(RESCAN, root)
+    r = subprocess.run(['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
+                        os.path.join(root, 'rescan.ps1')], capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout + r.stderr
+    with open(os.path.join(root, 'sounds.json'), encoding='utf-8') as f:
+        return {row['name']: row for row in json.load(f)['sounds']}, r.stdout
+
+
+def test_rescan_takes_any_filename():
+    """Any audio file in a cue folder is the replacement - no renaming. original.* is the game's own
+    music and never a replacement, and our own prepared file is not an input."""
+    with tempfile.TemporaryDirectory() as tmp:
+        rows, out = run_rescan(tmp, {
+            'mus_test_named_01 [1m00s]': ['My Song.mp3', 'original.ogg', 'notes.txt'],
+            'mus_test_loop_01 [1m00s]':  ['Some Track.loop.flac'],
+            'mus_test_orig_01 [1m00s]':  ['original.ogg'],
+            'mus_test_left_01 [1m00s]':  ['original.ogg', 'replace.prepared.wav'],
+            'mus_test_two_01 [1m00s]':   ['b song.mp3', 'a song.mp3'],
+            'mus_test_old_01 [1m00s]':   ['replace.mp3'],
+        })
+        assert set(rows) == {'mus_test_named_01_START', 'mus_test_loop_01_START',
+                             'mus_test_two_01_START', 'mus_test_old_01_START'}, (sorted(rows), out)
+        assert rows['mus_test_named_01_START']['file'].endswith('My Song.mp3'), rows
+        assert rows['mus_test_named_01_START']['loop'] is False
+        assert rows['mus_test_named_01_START']['stopOn'] == [], 'a cue with no stop event gets none'
+        assert rows['mus_test_loop_01_START']['loop'] is True, 'a .loop. file loops'
+        assert rows['mus_test_two_01_START']['file'].endswith('a song.mp3'), 'first by name wins'
+        assert 'b song.mp3' in out, 'the file it did not use should be named in the output'
+        assert rows['mus_test_old_01_START']['file'].endswith('replace.mp3'), 'old folders keep working'
+
+
+def test_rescan_prepared_name_is_ascii(prepare):
+    """AudioXL opens its files through narrow-string paths, so what prepare.exe writes must stay
+    ASCII however the player named their track - and the row must point at that prepared file."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = os.path.join(tmp, 'red4ext', 'plugins', 'AudioXL', 'sounds', 'SoundtrackSwitcher')
+        os.makedirs(os.path.join(root, 'q000 - Test', 'mus_test_utf8_01 [1m00s]'))
+        sine_wav(os.path.join(root, 'q000 - Test', 'mus_test_utf8_01 [1m00s]', 'Café Søng.wav'))
+        shutil.copy(prepare, root)
+        rows, out = run_rescan(tmp, {})
+        row = rows['mus_test_utf8_01_START']
+        assert row['file'].endswith('.prepared.wav'), row
+        assert row['file'].isascii(), row
+        assert os.path.exists(os.path.join(root, row['file'].replace('/', os.sep))), (row, out)
+
+
 if __name__ == '__main__':
     test_cue_naming()
     test_excluded_families()
     test_filter_graph()
+    test_rescan_takes_any_filename()
     built = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'prepare', 'build', 'prepare.exe')
     if os.path.exists(built):
         test_prepare_normalises(built)
+        test_rescan_prepared_name_is_ascii(built)
         print('ok - naming, filters and prepare.exe')
     else:
         print('ok - naming and filters (prepare.exe not built, skipped its check)')

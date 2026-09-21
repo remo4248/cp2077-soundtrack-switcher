@@ -10,8 +10,8 @@ bat, and the game plays it where its own music would have played.
    **AudioXL_patch_for_SoundtrackSwitcher.zip** — in that order in your mod
    manager, so the patch wins its three files.
 2. Open the mod's `SoundtrackSwitcher` folder, find a quest, find a cue.
-3. Put your track in as `replace.mp3` (or `.ogg`, `.flac`, `.wav`).
-   `replace.loop.mp3` repeats until the game moves on.
+3. Drop your track in. Any name, any of `.mp3`, `.ogg`, `.flac`, `.wav`.
+   A name ending in `.loop` repeats until the game moves on.
 4. Run `rescan.bat`. Start the game.
 
 A folder with no track keeps the game's own music. `SoundtrackSwitcher_previews.zip`

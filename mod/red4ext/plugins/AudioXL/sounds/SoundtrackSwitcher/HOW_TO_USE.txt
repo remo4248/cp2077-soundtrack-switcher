@@ -2,15 +2,16 @@ SOUNDTRACK SWITCHER - how to use
 
 1. Find the quest folder, then the cue folder you want to replace.
    The cue folder name shows the game's event name and [how much music the original has].
-2. Put your track in that cue folder, named:
-     replace.mp3        plays once, then silence if the scene is still going
-     replace.loop.mp3   repeats until the game moves on to another cue
-   (.ogg, .flac and .wav work too. If both files exist, the plain one wins.)
+2. Drop your track in that cue folder. Any name, any of .mp3, .ogg, .flac, .wav.
+   It plays once, then silence if the scene is still going.
+   To have it repeat until the game moves on, end the name with .loop - "My Song.loop.mp3".
+   (Put only one track in a folder. If there are several, the first by name is used.)
 3. Double-click rescan.bat. It lists what it found and writes sounds.json.
 4. Restart the game.
 
-A cue folder without a replace file keeps the original music.
-To undo a replacement: delete the file, run rescan.bat, restart.
+A cue folder without a track of yours keeps the game's own music.
+To undo a replacement: delete your track, run rescan.bat, restart.
+(original.ogg, if you installed the previews download, is the game's own music - leave it.)
 
 About looping: a looping track is held in memory instead of streamed from disk,
 which costs roughly 10 MB per minute of audio. Use it for short tracks.

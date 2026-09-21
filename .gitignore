@@ -1,9 +1,10 @@
 # Game-derived inputs and outputs: never redistributable, always regenerable
 tools/data/
-**/original.ogg
+**/*.mp3
+**/*.ogg
+**/*.flac
+**/*.wav
 **/replace.*
-**/*.cache.wav
-**/*.prepared.wav
 
 # Third-party clones and build output (our AudioXL changes live in patches/)
 /audioxl/

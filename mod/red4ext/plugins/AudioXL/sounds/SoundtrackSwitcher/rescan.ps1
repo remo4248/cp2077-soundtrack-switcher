@@ -30,11 +30,19 @@ if (Test-Path $stopsFile) {
 }
 
 $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -Filter 'mus_*') {
-    # replace.mp3 plays once; replace.loop.mp3 repeats until the game moves on to another cue.
-    $file = Get-ChildItem -LiteralPath $dir.FullName -File |
-        Where-Object { $_.BaseName -in 'replace', 'replace.loop' -and $_.Extension -in '.mp3', '.ogg', '.flac', '.wav' } |
-        Sort-Object BaseName | Select-Object -First 1
+    # Any audio file in the folder is the replacement - nothing has to be renamed. original.* is the
+    # game's own music, put there by the previews download, and *.prepared.wav is this script's own
+    # output, so neither counts. A name ending in .loop, like "My Song.loop.mp3", repeats until the
+    # game moves on to another cue; anything else plays once.
+    $found = @(Get-ChildItem -LiteralPath $dir.FullName -File | Where-Object {
+        $_.Extension -in '.mp3', '.ogg', '.flac', '.wav' -and
+        $_.BaseName -ne 'original' -and $_.BaseName -notlike '*.prepared' } | Sort-Object Name)
+    $file = $found | Select-Object -First 1
     if (-not $file) { continue }
+    if ($found.Count -gt 1) {
+        $ignored = ($found | Select-Object -Skip 1 | ForEach-Object Name) -join ', '
+        Write-Host "  $($dir.Name): using $($file.Name), ignoring $ignored" -ForegroundColor Yellow
+    }
 
     # The name is written verbatim into a game script below, and redscript compiles every script mod
     # together - so one malformed name would break the whole script build, not just this mod. Only
@@ -46,7 +54,13 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
         else { $skipped += "$($dir.Name) (no such cue)"; continue }
     }
 
-    $ready = Join-Path $dir.FullName 'replace.prepared.wav'
+    # Named after the track, so swapping in a different file never leaves the old prepared one
+    # behind to be played instead. The leftovers are ours and regenerable, so they go.
+    # AudioXL opens its files through narrow-string paths, so the name it is given stays ASCII
+    # whatever the track is called.
+    $ready = Join-Path $dir.FullName (($file.BaseName -replace '[^A-Za-z0-9 ._-]', '_') + '.prepared.wav')
+    Get-ChildItem -LiteralPath $dir.FullName -File -Filter '*.prepared.wav' |
+        Where-Object { $_.Name -ne (Split-Path $ready -Leaf) } | Remove-Item -Force
     $stale = (-not (Test-Path -LiteralPath $ready)) -or ((Get-Item -LiteralPath $ready).LastWriteTime -lt $file.LastWriteTime)
     # volume.txt holding e.g. -3 or +2 nudges this one cue, for when the measurement is not what the
     # scene wants by ear.
@@ -72,8 +86,8 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
     }
     $play = if (Test-Path -LiteralPath $ready) { $ready } else { $file.FullName }
 
-    [ordered]@{ name = $name; type = 'axl_music_2d'; loop = ($file.BaseName -eq 'replace.loop'); fadeOut = 2.0
-                stopOn = @($stops[$name])
+    [ordered]@{ name = $name; type = 'axl_music_2d'; loop = ($file.BaseName -like '*.loop'); fadeOut = 2.0
+                stopOn = @($stops[$name] | Where-Object { $_ })   # a cue with no stop event gets none
                 file = $play.Substring($root.Length + 1).Replace('\', '/') }
 }
 $rows = @($rows)
