@@ -17,7 +17,8 @@ $prepared = 0
 $cues = @{}
 $cuesFile = Join-Path $root 'cues.json'
 if (Test-Path $cuesFile) {
-    foreach ($c in (Get-Content $cuesFile -Raw | ConvertFrom-Json)) { $cues[$c] = $true }
+    # the value is the spelling the game uses, which is what has to reach sounds.json
+    foreach ($c in (Get-Content $cuesFile -Raw | ConvertFrom-Json)) { $cues[$c] = $c }
 }
 
 # stops.json lists the game's own events that end each cue, so a replacement can end where the
@@ -49,8 +50,12 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
     # plain event names get through; anything else is skipped and reported.
     $name = ($dir.Name -split ' ')[0]
     if ($name -cnotmatch '^mus_[A-Za-z0-9_]+$') { $skipped += $dir.Name; continue }
-    if ($cues.Count -and -not $cues.ContainsKey($name)) {
-        if ($cues.ContainsKey($name + '_START')) { $name = $name + '_START' }
+    # PowerShell matches hashtable keys without regard to case, but the game hashes an event name
+    # exactly as written - and 14 cues really do end in lowercase _start - so the name written out
+    # is always the one from cues.json, never one built by appending here.
+    if ($cues.Count) {
+        if ($cues.ContainsKey($name)) { $name = $cues[$name] }
+        elseif ($cues.ContainsKey($name + '_START')) { $name = $cues[$name + '_START'] }
         else { $skipped += "$($dir.Name) (no such cue)"; continue }
     }
 

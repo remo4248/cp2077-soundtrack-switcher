@@ -23,7 +23,8 @@ def write(src, out):
     os.makedirs(DIST, exist_ok=True)   # dist/ is not in git
     out = os.path.join(DIST, out)
     with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
-        for d, _, files in os.walk(src):
+        for d, dirs, files in os.walk(src):
+            dirs[:] = [x for x in dirs if x != '__pycache__']   # running the tests leaves these
             rel = os.path.relpath(d, src)
             if rel != '.': z.write(d, rel.replace(os.sep, '/') + '/')
             for f in files:
@@ -31,6 +32,7 @@ def write(src, out):
                 z.write(os.path.join(d, f), os.path.join(rel, f))
     names = zipfile.ZipFile(out).namelist()
     assert not any(os.path.splitext(n)[1].lower() in AUDIO for n in names), out
+    assert not any(n.endswith('.pyc') or '__pycache__' in n for n in names), out
     print(f'{len(names):4} entries, {os.path.getsize(out) / 1024:6.0f} KB -> {os.path.normpath(out)}')
     return names
 

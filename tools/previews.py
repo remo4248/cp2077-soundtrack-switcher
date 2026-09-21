@@ -37,7 +37,10 @@ def render(ffmpeg, media_dir, inputs, graph, out):
     for i in inputs: cmd += ['-i', i]
     cmd += ['-filter_complex', graph, '-map', '[out]', '-c:a', 'libvorbis', '-q:a', '4', out + '.part.ogg']
     r = subprocess.run(cmd, cwd=media_dir, capture_output=True, text=True)
-    if r.returncode: return r.stderr.strip()[-300:]
+    if r.returncode:
+        # ffmpeg can fail with nothing on stderr, and an empty string reads as success upstream
+        if os.path.exists(out + '.part.ogg'): os.remove(out + '.part.ogg')
+        return r.stderr.strip()[-300:] or f'ffmpeg exited {r.returncode}'
     os.replace(out + '.part.ogg', out)
 
 

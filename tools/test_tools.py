@@ -77,8 +77,10 @@ def run_rescan(tmp, folders):
         os.makedirs(d, exist_ok=True)
         for f in files:
             open(os.path.join(d, f), 'wb').close()
+    # 14 real cues end in lowercase _start, and CName hashing is case sensitive, so the manifest
+    # must carry the spelling from cues.json rather than an upper-cased guess.
     cues = [os.path.basename(d).split(' ')[0] + '_START'
-            for d in glob.glob(os.path.join(root, '*', 'mus_*'))] +            [folder.split(' ')[0] + '_START' for folder in folders]
+            for d in glob.glob(os.path.join(root, '*', 'mus_*'))] +            [folder.split(' ')[0] + ('_start' if 'lower' in folder else '_START') for folder in folders]
     os.makedirs(root, exist_ok=True)
     with open(os.path.join(root, 'cues.json'), 'w') as f:
         json.dump(cues, f)
@@ -101,9 +103,10 @@ def test_rescan_takes_any_filename():
             'mus_test_left_01 [1m00s]':  ['original.ogg', 'replace.prepared.wav'],
             'mus_test_two_01 [1m00s]':   ['b song.mp3', 'a song.mp3'],
             'mus_test_old_01 [1m00s]':   ['replace.mp3'],
+            'mus_test_lower_01 [1m00s]': ['Quiet.wav'],
         })
-        assert set(rows) == {'mus_test_named_01_START', 'mus_test_loop_01_START',
-                             'mus_test_two_01_START', 'mus_test_old_01_START'}, (sorted(rows), out)
+        assert set(rows) == {'mus_test_named_01_START', 'mus_test_loop_01_START', 'mus_test_two_01_START',
+                             'mus_test_old_01_START', 'mus_test_lower_01_start'}, (sorted(rows), out)
         assert rows['mus_test_named_01_START']['file'].endswith('My Song.mp3'), rows
         assert rows['mus_test_named_01_START']['loop'] is False
         assert rows['mus_test_named_01_START']['stopOn'] == [], 'a cue with no stop event gets none'
@@ -111,6 +114,7 @@ def test_rescan_takes_any_filename():
         assert rows['mus_test_two_01_START']['file'].endswith('a song.mp3'), 'first by name wins'
         assert 'b song.mp3' in out, 'the file it did not use should be named in the output'
         assert rows['mus_test_old_01_START']['file'].endswith('replace.mp3'), 'old folders keep working'
+        assert 'mus_test_lower_01_start' in rows, 'a cue that really ends in _start keeps that spelling'
 
 
 def test_rescan_prepared_name_is_ascii(prepare):
@@ -138,12 +142,38 @@ def test_script_does_not_poll():
     assert 'Session/Ready' in src and 'Session/BeforeEnd' in src
 
 
+def test_previews_reads_wolvenkits_capital_ogg():
+    """WolvenKit writes .Ogg; matching '.ogg' case-sensitively found nothing and the run reported
+    success with zero previews. This is that bug."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'previews_package'))
+    from make_previews import exported_ids
+    with tempfile.TemporaryDirectory() as tmp:
+        for name in ('10218075.Ogg', '10259603.ogg', '10535244.wem', 'notes.txt'):
+            open(os.path.join(tmp, name), 'w').close()
+        assert exported_ids(tmp) == {10218075, 10259603}
+
+
+def test_previews_finds_the_mod_wherever_it_is_unpacked():
+    """The previews zip is flat, so it lands next to rescan.bat - but the README also allows a
+    previews sub-folder. Both must find the mod root, which is the folder holding cues.json."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'previews_package'))
+    from make_previews import find_mod
+    with tempfile.TemporaryDirectory() as tmp:
+        mod = os.path.join(tmp, 'sounds', 'SoundtrackSwitcher')
+        os.makedirs(os.path.join(mod, 'previews'))
+        open(os.path.join(mod, 'cues.json'), 'w').write('[]')
+        assert find_mod(mod) == mod, 'unpacked next to rescan.bat'
+        assert find_mod(os.path.join(mod, 'previews')) == mod, 'unpacked into a previews folder'
+
+
 if __name__ == '__main__':
     test_cue_naming()
     test_excluded_families()
     test_filter_graph()
     test_rescan_takes_any_filename()
     test_script_does_not_poll()
+    test_previews_finds_the_mod_wherever_it_is_unpacked()
+    test_previews_reads_wolvenkits_capital_ogg()
     built = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'prepare', 'build', 'prepare.exe')
     if os.path.exists(built):
         test_prepare_normalises(built)

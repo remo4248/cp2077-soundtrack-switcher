@@ -2,7 +2,9 @@
 a cue sounds like before replacing it.
 
 Needs, both on PATH:
-  cp77tools   WolvenKit's command line tool:  dotnet tool install -g WolvenKit.CLI
+  WolvenKit's CLI, either name: cp77tools (dotnet tool install -g WolvenKit.CLI, needs the .NET
+              SDK) or WolvenKit.CLI (the WolvenKit.Console zip from WolvenKit's releases, needs
+              only the .NET runtime)
   ffmpeg      https://ffmpeg.org/download.html
 
 Usage (from the folder this sits in):
@@ -29,34 +31,65 @@ def wwise_id(name):
     return h
 
 
-def tool(name):
-    found = shutil.which(name)
-    if not found:
-        sys.exit(f'{name} is not on your PATH - see the notes at the top of this script.')
-    return found
+def find_mod(start):
+    """The mod root is whichever folder above us holds cues.json - so this package works unpacked
+    next to rescan.bat, in a previews sub-folder, or anywhere else inside the mod."""
+    d = start
+    while True:
+        if os.path.exists(os.path.join(d, CUES)):
+            return d
+        up = os.path.dirname(d)
+        if up == d:
+            sys.exit('Put this package inside the SoundtrackSwitcher folder - the one holding '
+                     'cues.json and rescan.bat - and run it again.')
+        d = up
+
+
+def exported_ids(media_dir):
+    """The media ids WolvenKit managed to convert. It writes .Ogg with a capital O, which is why
+    this compares lowercased - matching case-sensitively found nothing and reported success."""
+    return {int(os.path.splitext(f)[0]) for f in os.listdir(media_dir)
+            if os.path.splitext(f)[1].lower() == '.ogg'}
+
+
+def tool(*names):
+    """WolvenKit's CLI is called cp77tools when installed as a dotnet tool and WolvenKit.CLI in the
+    WolvenKit.Console download, so both are accepted."""
+    for name in names:
+        found = shutil.which(name)
+        if found:
+            return found
+    sys.exit(f'{" or ".join(names)} is not on your PATH - see the notes at the top of this script.')
 
 
 def run(*args):
     result = subprocess.run(args, capture_output=True, text=True)
     if result.returncode:
-        sys.exit(f'{args[0]} failed:\n{result.stdout[-800:]}{result.stderr[-800:]}')
+        raise SystemExit(f'{args[0]} failed:\n{result.stdout[-800:]}{result.stderr[-800:]}')
     return result.stdout
 
 
 def main():
     root = os.path.dirname(os.path.abspath(__file__))
-    mod = os.path.dirname(root)          # this package sits inside the mod's cue tree
+    mod = find_mod(root)
     game = None
     if '--game' in sys.argv:
         game = sys.argv[sys.argv.index('--game') + 1]
     if not game or not os.path.isdir(os.path.join(game, 'archive', 'pc', 'content')):
         sys.exit('Pass your game folder, e.g.  python make_previews.py --game "D:\\Games\\Cyberpunk2077"')
 
-    cp77tools, ffmpeg = tool('cp77tools'), tool('ffmpeg')
+    cp77tools, ffmpeg = tool('cp77tools', 'WolvenKit.CLI'), tool('ffmpeg')
     content = os.path.join(game, 'archive', 'pc', 'content')
     cues = json.load(open(os.path.join(mod, CUES), encoding='utf-8'))
     work = tempfile.mkdtemp(prefix='sts_previews_')
-    print(f'working in {work}')
+    print(f'working in {work} - it needs a few GB and is removed when this finishes')
+    try:
+        render_all(cp77tools, ffmpeg, game, content, mod, cues, work)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)   # several GB, gone even if a step failed
+
+
+def render_all(cp77tools, ffmpeg, game, content, mod, cues, work):
 
     print('1/4  reading the music soundbank')
     run(cp77tools, 'unbundle', os.path.join(content, 'audio_2_soundbanks.archive'), '-o', work,
@@ -76,18 +109,24 @@ def main():
     run(cp77tools, 'unbundle', os.path.join(content, 'audio_2_soundbanks.archive'), '-o', work,
         '-r', f'media.({ids})[.]wem$', '-v', 'Minimal')
     media = os.path.join(work, r'base\sound\soundbanks\media')
-    run(cp77tools, 'export', media, '-o', media, '-v', 'Minimal')
-    have = {int(f[:-4]) for f in os.listdir(media) if f.endswith('.ogg')}
+    # WolvenKit 9 refuses to export without a game path, even when only .wem files are involved.
+    run(cp77tools, 'export', media, '-o', media, '--gamepath', game, '-v', 'Minimal')
+    have = exported_ids(media)
+    if not have:
+        raise SystemExit('WolvenKit exported no audio - nothing to build previews from.')
 
     print('4/4  rendering a preview per cue')
+    # Folder names drop the _START most cues carry, and 14 cues end in a lowercase _start, so the
+    # match is made without case and the cue keeps the spelling cues.json gives it.
+    by_name = {c.lower(): c for c in cues}
     folders = {}
     for quest in os.listdir(mod):
         qdir = os.path.join(mod, quest)
         if not os.path.isdir(qdir): continue
         for folder in os.listdir(qdir):
-            token = folder.split(' ')[0]
-            cue = token if token in cues else token + '_START'
-            if cue in cues: folders[cue] = os.path.join(qdir, folder)
+            token = folder.split(' ')[0].lower()
+            cue = by_name.get(token) or by_name.get(token + '_start')
+            if cue: folders[cue] = os.path.join(qdir, folder)
 
     jobs = []
     for cue, segs in per_cue.items():
@@ -95,11 +134,18 @@ def main():
         if not out or os.path.exists(out): continue
         inputs, graph = filter_graph(segs, have)
         if inputs: jobs.append((cue, inputs, graph, out))
+    failed = 0
     with ThreadPoolExecutor(os.cpu_count() or 4) as pool:
         for (cue, *_), err in zip(jobs, pool.map(lambda j: render(ffmpeg, media, *j[1:]), jobs)):
-            if err: print('  failed:', cue, err)
-    print(f'done - {len(jobs)} preview(s) written. Delete any original.ogg to reclaim the space.')
-    shutil.rmtree(work, ignore_errors=True)
+            if err:
+                failed += 1
+                print('  failed:', cue, err)
+    if failed:
+        print(f'{failed} cue(s) could not be rendered - the game audio for them did not convert.')
+    if not jobs:
+        raise SystemExit('No previews were built. Every cue folder either has an original.ogg '
+                         'already, or none of its audio came out of the game files.')
+    print(f'done - {len(jobs) - failed} preview(s) written. Delete any original.ogg to reclaim the space.')
 
 
 if __name__ == '__main__':
