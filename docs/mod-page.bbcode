@@ -63,9 +63,49 @@ The separate previews download renders the game's own music for every cue into t
 
 The game can crash while loading a save, at roughly 1 load in 9. Loading again works. The fault is inside the game's own audio code and happens with AudioXL and any custom sound registered, with or without this mod's script, so it is not something this mod can fix from the outside. It is under investigation.
 
-[size=4]Performance[/size]
+[size=4]Performance, in numbers[/size]
 
-While you play, the mod asks AudioXL once every quarter second what is playing - one call, whose cost follows what is actually playing rather than how many cues you replaced. It wraps no game method and replaces no game class, so it does not conflict with other script mods. Your prepared tracks are memory-mapped, not streamed or decoded during play.
+The design rule was simple: all the expensive work happens when you run rescan.bat, none of it while you are playing.
+
+[b]Storage[/b]
+[list]
+[*]The mod itself, with no tracks added: [b]2.6 MB[/b]. That is 278 cue folders, the cue data and prepare.exe.
+[*]Each track you add costs your own file plus a prepared copy at [b]10.6 MB per minute[/b] of audio (uncompressed 16-bit stereo - that is what lets the game play it without decoding anything). A 3 minute track is about 32 MB.
+[*]Ten replaced tracks is roughly 350 MB. Replacing all 278 cues, which is 24.5 hours of music, would be about 15 GB - nobody is doing that, but that is the ceiling.
+[*]The optional previews download renders the game's own music into the folders: about [b]1.4 GB[/b] if you render all of them. Delete them when you are done comparing.
+[/list]
+
+[b]RAM[/b]
+[list]
+[*]Only the cues you replaced cost anything: [b]10.6 MB per minute[/b] of replaced audio, the same as on disk. Four replaced tracks of about 3 minutes each is roughly 130 MB.
+[*]That memory is a file mapping, not a heap allocation - Windows backs it with the file on disk and is free to drop those pages when something else needs the RAM, then read them back. It is the cheapest way to hold audio that must never stutter.
+[*]A single file may not exceed 500 MB, which is about 47 minutes of audio.
+[*]Cues you did not replace cost nothing at all. There is no table of 278 anything in memory.
+[/list]
+
+[b]CPU while playing[/b]
+[list]
+[*]Four times a second, one call to ask what is playing, plus one call per track actually playing - normally zero or one. It does not matter whether you replaced 1 cue or 278; the cost follows what is playing.
+[*]Your track is mixed as one stereo voice with no decoding, because it was converted ahead of time. It is the cheapest kind of sound the engine has.
+[*]The patch adds one atomic read per sound event the game posts, and does real work only when a track of yours is playing and the game fires the event that ends it.
+[*]Nothing in the game is wrapped, replaced or hooked in script, so no other script mod pays for this one being installed.
+[/list]
+
+[b]CPU when loading[/b]
+[list]
+[*]Your tracks are registered once, while the game sets up audio: [b]22 ms for four tracks[/b], measured. The first launch after adding a track also reads that track off disk once.
+[*]The three small script files compile with everything else redscript compiles; you will not see it in the load time.
+[/list]
+
+[b]CPU when you run rescan.bat[/b]
+[list]
+[*][b]0.38 seconds[/b] for a 3 minute track, measured, on one core - decode, loudness measurement, gain, limiter and write. Only new or changed tracks are processed; the rest are skipped.
+[/list]
+
+[b]GPU[/b]
+[list]
+[*]Nothing. The mod draws nothing at all. The on/off switch is a row in Mod Settings' existing menu.
+[/list]
 
 [size=4]Credits[/size]
 
