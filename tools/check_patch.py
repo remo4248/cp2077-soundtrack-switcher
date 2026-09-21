@@ -1,18 +1,17 @@
-"""The patch must bring everything it references. It once did not: it added #include "StopOn.hpp"
-without the file, so `git apply --check` passed and the result would not have compiled.
+"""Every header our patch starts including must be a file the patch also brings.
 
-Usage: python tools/check_patch.py <folder holding the patched AudioXL checkout>
+It once wasn't: the patch added #include "StopOn.hpp" without StopOn.hpp or StopOn.cpp, so
+`git apply --check` passed and the result could not compile. Upstream's own includes are left
+alone - they resolve through include paths this check knows nothing about.
+
+Usage: python tools/check_patch.py <patch file> <folder holding the patched checkout>
 """
 import os, re, sys
 
-root = os.path.join(sys.argv[1], 'plugin', 'src')
-missing = []
-for f in os.listdir(root):
-    if not f.endswith(('.cpp', '.hpp')):
-        continue
-    for inc in re.findall(r'#include\s+"([^"]+)"', open(os.path.join(root, f), encoding='utf-8').read()):
-        if not os.path.exists(os.path.join(root, inc)):
-            missing.append(f'{f} includes {inc}, which is not in the tree')
+patch, tree = sys.argv[1], sys.argv[2]
+added = re.findall(r'^\+\s*#include\s+"([^"]+)"', open(patch, encoding='utf-8').read(), re.M)
+present = {f for _, _, files in os.walk(tree) for f in files}
+missing = sorted({inc for inc in added if os.path.basename(inc) not in present})
 if missing:
-    sys.exit('patch is incomplete:\n  ' + '\n  '.join(missing))
-print(f'ok - every local include in {root} resolves')
+    sys.exit('patch adds includes for files it does not bring:\n  ' + '\n  '.join(missing))
+print(f'ok - the {len(set(added))} include(s) the patch adds are all in the tree')

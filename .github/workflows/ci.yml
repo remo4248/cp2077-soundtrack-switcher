@@ -41,7 +41,7 @@ jobs:
           git checkout --quiet $(Get-Content ..\patches\audioxl-base-commit.txt).Split(' ')[0]
           git apply ..\patches\audioxl-soundtrackswitcher.patch
           cd ..
-          python tools\check_patch.py audioxl-check
+          python tools\check_patch.py patches\audioxl-soundtrackswitcher.patch audioxl-check
           Write-Host "patch applies and brings every file it references"
 
       - uses: actions/upload-artifact@v4
