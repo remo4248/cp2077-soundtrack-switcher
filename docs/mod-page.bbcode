@@ -69,9 +69,9 @@ The design rule was simple: all the expensive work happens when you run rescan.b
 
 [b]Storage[/b]
 [list]
-[*]The mod itself, with no tracks added: [b]2.6 MB[/b]. That is 278 cue folders, the cue data and prepare.exe.
+[*]The mod itself, with no tracks added: [b]2.6 MB[/b]. That is 281 cue folders, the cue data and prepare.exe.
 [*]Each track you add costs your own file plus a prepared copy at [b]10.6 MB per minute[/b] of audio (uncompressed 16-bit stereo - that is what lets the game play it without decoding anything). A 3 minute track is about 32 MB.
-[*]Ten replaced tracks is roughly 350 MB. Replacing all 278 cues, which is 24.5 hours of music, would be about 15 GB - nobody is doing that, but that is the ceiling.
+[*]Ten replaced tracks is roughly 350 MB. Replacing every cue - 24.5 hours of music across the 278 whose length the game tells us - would be about 15 GB. Nobody is doing that, but that is the ceiling.
 [*]The optional previews download renders the game's own music into the folders: about [b]1.4 GB[/b] if you render all of them. Delete them when you are done comparing.
 [/list]
 
@@ -80,12 +80,12 @@ The design rule was simple: all the expensive work happens when you run rescan.b
 [*]Only the cues you replaced cost anything: [b]10.6 MB per minute[/b] of replaced audio, the same as on disk. Four replaced tracks of about 3 minutes each is roughly 130 MB.
 [*]That memory is a file mapping, not a heap allocation - Windows backs it with the file on disk and is free to drop those pages when something else needs the RAM, then read them back. It is the cheapest way to hold audio that must never stutter.
 [*]A single file may not exceed 500 MB, which is about 47 minutes of audio.
-[*]Cues you did not replace cost nothing at all. There is no table of 278 anything in memory.
+[*]Cues you did not replace cost nothing at all. There is no table of 281 anything in memory.
 [/list]
 
 [b]CPU while playing[/b]
 [list]
-[*]Four times a second, one call to ask what is playing, plus one call per track actually playing - normally zero or one. It does not matter whether you replaced 1 cue or 278; the cost follows what is playing.
+[*]Four times a second, one call to ask what is playing, plus one call per track actually playing - normally zero or one. It does not matter whether you replaced 1 cue or 281; the cost follows what is playing.
 [*]Your track is mixed as one stereo voice with no decoding, because it was converted ahead of time. It is the cheapest kind of sound the engine has.
 [*]The patch adds one atomic read per sound event the game posts, and does real work only when a track of yours is playing and the game fires the event that ends it.
 [*]Nothing in the game is wrapped, replaced or hooked in script, so no other script mod pays for this one being installed.
