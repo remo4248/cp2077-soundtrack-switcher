@@ -10,7 +10,9 @@ Soundtrack Switcher needs:
   PlayingRows   one call that returns what is currently playing (no longer used by this mod,
                 kept because it is part of the upstream offer)
 
-Install AFTER AudioXL so these files win. Everything else in AudioXL is unchanged,
+This is not a replacement for AudioXL: it holds two of AudioXL's files, not all of them, and
+the rest of AudioXL - the routing bank everything plays through, its settings - is still needed.
+Install AudioXL first, then this AFTER it so these two files win. Everything else in AudioXL is unchanged,
 and the source of this build is at https://github.com/DigitalVixenSWE/cp2077-audio-xl.
 AudioXL is MIT licensed; its licence is in AudioXL-LICENSE.md next to this file.
 

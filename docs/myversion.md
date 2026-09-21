@@ -23,6 +23,8 @@ Why there are two downloads
 
 AudioXL is what lets a mod play its own file where the game asked for its own music. It is excellent, and this mod would not exist without it. However there are two things it cannot do yet that this mod needs:
 
+To be clear: the patch is not a replacement for AudioXL and does not contain it. It swaps out two of AudioXL's files, its plugin and its script, for the same build with those two additions. The rest of AudioXL - the routing bank everything plays through, its settings - has to be installed, which is why AudioXL is listed as a requirement and the patch goes in after it.
+
 1. Ending your track where the scene ends. When the game finishes a piece of music it fires a stop event, but that event acts on the game's own music, not on a replacement. So without the patch your track does not stop when the scene does - it plays on through until some other cue happens to start. The patch lets a sound name the events that end it, so your track ends on the same beat the original would have, with a fade.
 
 2. Turning replacements off in game. The on/off switch works by clearing your cues from the engine's sound table and putting them back, which is what gives you the game's own music again. AudioXL has no way to do that from outside.
@@ -97,7 +99,7 @@ Nothing. The mod draws nothing at all. The on/off switch is a row in Mod Setting
 
 Credits
 
-DigitalVixen for AudioXL, which does the actual work of playing a custom sound where the game asked for its own. The patch file on this page is a build of AudioXL with the two additions described above, shared under AudioXL's MIT licence, and those additions have been offered upstream.
+DigitalVixen for AudioXL, which does the actual work of playing a custom sound where the game asked for its own. The patch file on this page swaps two of AudioXL's files for the same build with the two additions described above, shared under AudioXL's MIT licence, and those additions have been offered upstream. Install AudioXL first; the patch is not a substitute for it.
 WopsS and the RED4ext team, jac3km4 and the redscript team, psiberx for the tooling the scene runs on.
 
 Source and permissions

@@ -30,6 +30,8 @@ No REDmod. No game file is modified: everything this mod does happens through Au
 
 AudioXL is what lets a mod play its own file where the game asked for its own music. It is excellent, and this mod would not exist without it. Two things it cannot do yet are things this mod needs, so the second download is AudioXL 0.4.3 with those two added.
 
+[b]The patch is not a replacement for AudioXL[/b] and does not contain it. It swaps out two of AudioXL's files - its plugin and its script - for the same build with the additions. The rest of AudioXL, including the routing bank everything plays through, must be installed, which is why it is a requirement and the patch is installed after it.
+
 [b]1. Ending your track where the scene ends.[/b] When the game finishes a piece of music it fires a stop event, but that event acts on the game's own music, not on a replacement. So without the patch your track does not stop when the scene does - it plays on through the next conversation and into the next quest until some other cue happens to start. The patch lets a sound name the events that end it, so your track ends on the same beat the original would have, with a fade.
 
 [b]2. Turning replacements off in game.[/b] The on/off switch works by clearing your cues from the engine's sound table and putting them back, which is what gives you the game's own music again without a restart. AudioXL has no way to do that from outside.
