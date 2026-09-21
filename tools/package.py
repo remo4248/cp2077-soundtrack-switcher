@@ -12,6 +12,7 @@ PREPARE_IN_MOD = os.path.join(MOD, 'red4ext', 'plugins', 'AudioXL', 'sounds', 'S
 
 
 def write(out):
+    os.makedirs(os.path.dirname(out), exist_ok=True)   # dist/ is not in git
     with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
         for d, _, files in os.walk(MOD):
             rel = os.path.relpath(d, MOD)
