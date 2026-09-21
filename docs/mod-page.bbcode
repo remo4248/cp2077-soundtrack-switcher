@@ -26,6 +26,20 @@ No REDmod. No game file is modified: everything this mod does happens through Au
 [*]Mod Settings (optional, only for the in-game on/off switch)
 [/list]
 
+[size=4]Why there are two downloads[/size]
+
+AudioXL is what lets a mod play its own file where the game asked for its own music. It is excellent, and this mod would not exist without it. Three things it cannot do yet are things this mod needs, so the second download is AudioXL 0.4.3 with those three added.
+
+[b]1. Ending your track where the scene ends.[/b] When the game finishes a piece of music it fires a stop event, but that event acts on the game's own music, not on a replacement. So without the patch your track does not stop when the scene does - it plays on through the next conversation and into the next quest until some other cue happens to start. The patch lets a sound name the events that end it, so your track ends on the same beat the original would have, with a fade.
+
+[b]2. Turning replacements off in game.[/b] The on/off switch works by clearing your cues from the engine's sound table and putting them back, which is what gives you the game's own music again without a restart. AudioXL has no way to do that from outside.
+
+[b]3. Asking what is playing, once.[/b] Without the patch the script has to ask about every cue you replaced, four times a second, so the cost grows with how many you replaced. The patch answers the whole question in one call, so it does not matter whether you replaced one cue or all of them.
+
+[b]Do you have to install it?[/b] The mod works without it: your tracks still play, and a new cue still takes over from an old one. You lose the precise ending, the in-game switch, and you pay a little more per replaced cue. Everything else is the same.
+
+[b]Is it safe to replace AudioXL's files?[/b] It is AudioXL 0.4.3 itself, built from DigitalVixen's own source with those three additions and nothing else changed, shared under AudioXL's MIT licence with the licence included. The changes are public and have been offered to AudioXL's author. If they land in an official release, delete this download and keep official AudioXL - this mod will pick the difference up on its own. Remove the patch at any time and you are back to stock AudioXL; nothing else on your install is touched.
+
 [size=4]Installing[/size]
 
 [list=1]
