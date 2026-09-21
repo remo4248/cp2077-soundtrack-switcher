@@ -37,8 +37,13 @@ public class SoundtrackSwitcherService extends ScriptableService {
     this.m_running = true;
     // One line a session: enough to tell, from a user's log, whether the mod was live and how much
     // it was asked to do. The full AudioXL slot report is in tools/diagnostics.reds when needed.
+    //
+    // The list is bound to a local first. Called inline inside ArraySize() this logged 0 on every
+    // session of 2026-09-21 while the switch and the overlap watcher, which both bind it to a local,
+    // worked on the same list.
+    let watching = SoundtrackSwitcherCues.List();
     AudioXLLog.Write("[SoundtrackSwitcher] session start: watching " +
-                     ToString(ArraySize(SoundtrackSwitcherCues.List())) + " cue(s)");
+                     ToString(ArraySize(watching)) + " cue(s)");
     this.Schedule();
   }
 
