@@ -1,92 +1,48 @@
-// Keeps two replaced music cues from playing over each other.
+// Two callbacks, no polling.
 //
-// AudioXL swaps a cue's music for the player's own file, but the game's own "stop this cue" events
-// act on the game's music objects, not on our file - so when the next cue starts, the previous file
-// keeps playing underneath it. Four times a second this asks AudioXL how far into each replaced cue
-// it is; anything above zero is playing, and the one with the least time played is the one that
-// started last, so the others are stopped.
+// A replaced cue ends where the game ends its own music: rescan.bat writes the game's own stop
+// events into sounds.json, and AudioXL stops the track when one of them is posted. 255 of the 281
+// cues have such an event. The 26 that do not are the credits, two stingers, four scene pieces and
+// nineteen fragments of Kerry, the nomad bard and Johnny performing - if you replace one of those,
+// your track runs until the next cue starts.
 //
-// The cue list lives in Cues.reds, which rescan.bat writes next to the player's files.
+// Earlier versions watched every replaced cue four times a second to stop an older one when a newer
+// started. Stop events made that unnecessary; see docs/decisions/0007.
+//
+// What is left is session end: a track still playing when the session ends leaves AudioXL holding a
+// voice for it, which survives into the next session (its own SlotReport calls it ORPHANED).
 module SoundtrackSwitcher
 
 @if(ModuleExists("AudioXL"))
 import AudioXL.*
 
 @if(ModuleExists("AudioXL"))
-public class SoundtrackSwitcherTick extends DelayCallback {
-  public let service: wref<SoundtrackSwitcherService>;
-
-  public func Call() -> Void {
-    if IsDefined(this.service) {
-      this.service.Tick();
-    }
-  }
-}
-
-@if(ModuleExists("AudioXL"))
 public class SoundtrackSwitcherService extends ScriptableService {
-  private let m_running: Bool;
-  private let m_fadingOut: array<CName>;
-
   private cb func OnLoad() {
     let cb = GameInstance.GetCallbackSystem();
     cb.RegisterCallback(n"Session/Ready", this, n"OnSessionReady");
     cb.RegisterCallback(n"Session/BeforeEnd", this, n"OnSessionEnd");
   }
 
+  // One line a session: enough to tell, from a user's log, whether the mod was live and how much it
+  // was asked to do. The list is bound to a local because counting the call inline reported 0.
   private cb func OnSessionReady(event: ref<GameSessionEvent>) -> Void {
-    if event.IsPreGame() || this.m_running {
+    if event.IsPreGame() {
       return;
     }
-    this.m_running = true;
-    this.Schedule();
+    let cues = SoundtrackSwitcherCues.List();
+    AudioXLLog.Write("[SoundtrackSwitcher] session start: " + ToString(ArraySize(cues)) + " cue(s) replaced");
   }
 
   private cb func OnSessionEnd(event: ref<GameSessionEvent>) -> Void {
-    this.m_running = false;
-    ArrayClear(this.m_fadingOut);
-  }
-
-  private func Schedule() -> Void {
-    let tick = new SoundtrackSwitcherTick();
-    tick.service = this;
-    GameInstance.GetDelaySystem(GetGameInstance()).DelayCallback(tick, 0.25, false);
-  }
-
-  public func Tick() -> Void {
-    if !this.m_running {
-      return;   // session over: stop ticking rather than reschedule
+    if event.IsPreGame() || !AudioXLNative.Enabled() {
+      return;
     }
     let cues = SoundtrackSwitcherCues.List();
-    let newest: CName = n"";
-    let newestPos: Float = 0.0;
-    let playing: array<CName>;
     let i: Int32 = 0;
     while i < ArraySize(cues) {
-      let pos: Float = AudioXLAPI.Position(cues[i]);
-      if pos > 0.0 {
-        ArrayPush(playing, cues[i]);
-        if !IsNameValid(newest) || pos < newestPos {
-          newest = cues[i];
-          newestPos = pos;
-        }
-      } else {
-        ArrayRemove(this.m_fadingOut, cues[i]);   // done fading, so it may be stopped again later
-      }
+      AudioXLAPI.Stop(cues[i], 0.0);   // a cue that is not playing ignores this
       i += 1;
     }
-    if ArraySize(playing) > 1 {
-      i = 0;
-      while i < ArraySize(playing) {
-        // A cue still counts as playing while it fades, so asking twice would keep restarting the
-        // fade and it would never end.
-        if !Equals(playing[i], newest) && !ArrayContains(this.m_fadingOut, playing[i]) {
-          AudioXLAPI.Stop(playing[i], 2.0);   // seconds; the fade in is the row's fadeIn in sounds.json
-          ArrayPush(this.m_fadingOut, playing[i]);
-        }
-        i += 1;
-      }
-    }
-    this.Schedule();
   }
 }

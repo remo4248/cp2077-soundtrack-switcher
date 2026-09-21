@@ -128,11 +128,22 @@ def test_rescan_prepared_name_is_ascii(prepare):
         assert os.path.exists(os.path.join(root, row['file'].replace('/', os.sep))), (row, out)
 
 
+def test_script_does_not_poll():
+    """ADR-0007: the script runs at session start and session end, never while you play. A timer
+    creeping back in is the regression this guards."""
+    src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'mod', 'r6', 'scripts',
+                            'SoundtrackSwitcher', 'SoundtrackSwitcher.reds'), encoding='utf-8').read()
+    for banned in ('DelayCallback', 'DelaySystem', 'PlayingRows', 'Position('):
+        assert banned not in src.split('module SoundtrackSwitcher')[1], banned
+    assert 'Session/Ready' in src and 'Session/BeforeEnd' in src
+
+
 if __name__ == '__main__':
     test_cue_naming()
     test_excluded_families()
     test_filter_graph()
     test_rescan_takes_any_filename()
+    test_script_does_not_poll()
     built = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'prepare', 'build', 'prepare.exe')
     if os.path.exists(built):
         test_prepare_normalises(built)

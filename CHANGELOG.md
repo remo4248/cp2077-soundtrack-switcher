@@ -2,6 +2,18 @@
 
 All notable changes to Soundtrack Switcher, newest first.
 
+## [Unreleased]
+
+### Removed
+- The four-times-a-second watcher. Stop events end a replaced track for 255 of
+  the 281 cues, which makes the watcher insurance for 26 - 19 of them seven-second
+  performance fragments. Nothing of this mod now runs while you play. Replacing
+  one of the other 7 (the credits, two mq304 stingers, the Heist-to-flashback
+  bridge, three q110/q112 pieces) means that track plays until the next cue
+  starts. See docs/decisions/0007.
+- The patch mod no longer overrides this mod's script: what is left needs only
+  `Stop`, which official AudioXL has, so one script serves both installs.
+
 ## [0.2.0] - 2026-09-21
 
 ### Changed

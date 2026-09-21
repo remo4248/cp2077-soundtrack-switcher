@@ -10,7 +10,7 @@ No REDmod. No game file is modified: everything this mod does happens through Au
 [*]281 story cues, grouped into folders by quest, each folder named after the quest as the game names it and showing how long the original music runs.
 [*]Any filename. Drop in [b]My Song.mp3[/b], [b]whatever.flac[/b], anything - .mp3, .ogg, .flac and .wav all work. Nothing has to be renamed.
 [*]Loudness matched to the game's own score, so your track sits at the level the scene expects instead of blowing the dialogue away or vanishing under it. A [b]volume.txt[/b] holding e.g. -3 nudges a single cue by ear.
-[*]Your track ends where the game ends its own music, for the 255 cues that have a stop event. Otherwise it ends when the next cue starts. A new cue always takes over from an older one with a 2 second fade, so two tracks never play over each other.
+[*]Your track ends where the game ends its own music, with a 2 second fade, for the 255 cues of 281 that have a stop event. The 26 that do not are the credits, a few short stingers and some performance pieces; replace one of those and your track runs until the next cue starts.
 [*]Looping when you want it: end the filename with [b].loop[/b] and it repeats until the game moves on.
 [*]An on/off switch in Settings -> Mods, no restart needed. Off gives you the game's own music back, not silence.
 [*]Story score only. Radio, combat music, district ambience and diegetic music are all left alone.
@@ -28,17 +28,15 @@ No REDmod. No game file is modified: everything this mod does happens through Au
 
 [size=4]Why there are two downloads[/size]
 
-AudioXL is what lets a mod play its own file where the game asked for its own music. It is excellent, and this mod would not exist without it. Three things it cannot do yet are things this mod needs, so the second download is AudioXL 0.4.3 with those three added.
+AudioXL is what lets a mod play its own file where the game asked for its own music. It is excellent, and this mod would not exist without it. Two things it cannot do yet are things this mod needs, so the second download is AudioXL 0.4.3 with those two added.
 
 [b]1. Ending your track where the scene ends.[/b] When the game finishes a piece of music it fires a stop event, but that event acts on the game's own music, not on a replacement. So without the patch your track does not stop when the scene does - it plays on through the next conversation and into the next quest until some other cue happens to start. The patch lets a sound name the events that end it, so your track ends on the same beat the original would have, with a fade.
 
 [b]2. Turning replacements off in game.[/b] The on/off switch works by clearing your cues from the engine's sound table and putting them back, which is what gives you the game's own music again without a restart. AudioXL has no way to do that from outside.
 
-[b]3. Asking what is playing, once.[/b] Without the patch the script has to ask about every cue you replaced, four times a second, so the cost grows with how many you replaced. The patch answers the whole question in one call, so it does not matter whether you replaced one cue or all of them.
+[b]Do you have to install it?[/b] The mod works without it: your tracks still play. What you lose is the ending - your track runs past the scene it belongs to until another cue starts - and the in-game switch. That first one is why the patch is listed as required rather than optional.
 
-[b]Do you have to install it?[/b] The mod works without it: your tracks still play, and a new cue still takes over from an old one. You lose the precise ending, the in-game switch, and you pay a little more per replaced cue. Everything else is the same.
-
-[b]Is it safe to replace AudioXL's files?[/b] It is AudioXL 0.4.3 itself, built from DigitalVixen's own source with those three additions and nothing else changed, shared under AudioXL's MIT licence with the licence included. The changes are public and have been offered to AudioXL's author. If they land in an official release, delete this download and keep official AudioXL - this mod will pick the difference up on its own. Remove the patch at any time and you are back to stock AudioXL; nothing else on your install is touched.
+[b]Is it safe to replace AudioXL's files?[/b] It is AudioXL 0.4.3 itself, built from DigitalVixen's own source with those additions and nothing else changed, shared under AudioXL's MIT licence with the licence included. The changes are public and have been offered to AudioXL's author. If they land in an official release, delete this download and keep official AudioXL - this mod will pick the difference up on its own. Remove the patch at any time and you are back to stock AudioXL; nothing else on your install is touched.
 
 [size=4]Installing[/size]
 
@@ -99,7 +97,7 @@ The design rule was simple: all the expensive work happens when you run rescan.b
 
 [b]CPU while playing[/b]
 [list]
-[*]Four times a second, one call to ask what is playing, plus one call per track actually playing - normally zero or one. It does not matter whether you replaced 1 cue or 281; the cost follows what is playing.
+[*][b]Nothing of this mod runs while you play.[/b] There is no timer, no polling, no per-frame work. The game starts your track by name and the game's own stop event ends it; the mod's script only runs when a session starts and when it ends.
 [*]Your track is mixed as one stereo voice with no decoding, because it was converted ahead of time. It is the cheapest kind of sound the engine has.
 [*]The patch adds one atomic read per sound event the game posts, and does real work only when a track of yours is playing and the game fires the event that ends it.
 [*]Nothing in the game is wrapped, replaced or hooked in script, so no other script mod pays for this one being installed.
