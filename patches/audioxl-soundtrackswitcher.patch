@@ -228,7 +228,7 @@ index 8c1659e..661cda9 100644
    std::snprintf(buf, sizeof(buf), " (row %u, gain %.2f)", static_cast<unsigned>(before), aSpec.gain);
    if (m_report.size() < 2000) m_report.push_back("  " + aSpec.name + " <- " + aSpec.type + buf);
 diff --git a/plugin/src/SoundRegistry.hpp b/plugin/src/SoundRegistry.hpp
-index 9b7d499..0f605d1 100644
+index 9b7d499..2681a47 100644
 --- a/plugin/src/SoundRegistry.hpp
 +++ b/plugin/src/SoundRegistry.hpp
 @@ -4,6 +4,7 @@
@@ -266,10 +266,124 @@ index 9b7d499..0f605d1 100644
    std::vector<uint64_t> m_streamFrames;      
 -  std::vector<SoundSpec> m_specs;            
 +  std::vector<SoundSpec> m_specs;
-+  std::unordered_map<uint16_t, uint64_t> m_disabledNames;   // row -> the hash we cleared            
++  std::unordered_map<uint16_t, uint64_t> m_disabledNames;   // row -> the hash we cleared
    std::vector<Pending> m_queue;
    std::vector<Pending> m_bankRetry;
    std::vector<std::string> m_report;
+diff --git a/plugin/src/StopOn.cpp b/plugin/src/StopOn.cpp
+new file mode 100644
+index 0000000..cd2b5f8
+--- /dev/null
++++ b/plugin/src/StopOn.cpp
+@@ -0,0 +1,74 @@
++#include "StopOn.hpp"
++
++#include <RED4ext/RED4ext.hpp>
++
++#include "AudioFeed.hpp"
++#include "AudioXLPlugin.hpp"
++#include "SoundRegistry.hpp"
++
++namespace AudioXLNS::StopOn {
++
++namespace {
++using PostEventFn = uint32_t(__fastcall*)(uint32_t, uint64_t, uint32_t, void*, void*, uint32_t, void*, uint32_t);
++
++PostEventFn s_original = nullptr;
++void* s_target = nullptr;
++std::shared_mutex s_mutex;
++std::unordered_map<uint32_t, std::vector<uint16_t>> s_rows;   // event id -> rows it stops
++std::atomic<bool> s_any{false};                               // read on every posted event
++
++uint32_t __fastcall OnPostEvent(uint32_t aEventId, uint64_t aGameObject, uint32_t aFlags, void* a4, void* a5,
++                                uint32_t a6, void* a7, uint32_t a8) {
++  if (s_any.load(std::memory_order_relaxed)) {
++    std::vector<uint16_t> rows;
++    {
++      std::shared_lock lock(s_mutex);
++      const auto hit = s_rows.find(aEventId);
++      if (hit != s_rows.end()) rows = hit->second;
++    }
++    auto* feed = AudioFeed::Get();
++    auto* reg = SoundRegistry::Get();
++    for (const uint16_t row : rows) {
++      if (!feed->IsPlaying(row)) continue;
++      const SoundSpec* spec = reg->SpecForRow(row);
++      feed->Stop(row, spec ? spec->fadeOut : 0.0f);
++    }
++  }
++  return s_original(aEventId, aGameObject, aFlags, a4, a5, a6, a7, a8);
++}
++}   // namespace
++
++void Watch(uint32_t aEventId, uint16_t aRow) {
++  if (aEventId == 0) return;
++  {
++    std::unique_lock lock(s_mutex);
++    auto& rows = s_rows[aEventId];
++    for (const uint16_t existing : rows) {
++      if (existing == aRow) return;
++    }
++    rows.push_back(aRow);
++  }
++  s_any.store(true, std::memory_order_relaxed);
++}
++
++void Attach(uintptr_t aPostEvent) {
++  auto* plugin = AudioXLPlugin::Get();
++  if (s_target || !aPostEvent || !plugin->Sdk()) return;
++  s_target = reinterpret_cast<void*>(aPostEvent);
++  if (!plugin->Sdk()->hooking->Attach(plugin->Handle(), s_target, reinterpret_cast<void*>(&OnPostEvent),
++                                      reinterpret_cast<void**>(&s_original))) {
++    plugin->Warn("stopOn unavailable: could not hook the sound engine's post");
++    s_target = nullptr;
++  }
++}
++
++void Detach() {
++  auto* plugin = AudioXLPlugin::Get();
++  if (s_target && plugin->Sdk()) {
++    plugin->Sdk()->hooking->Detach(plugin->Handle(), s_target);
++    s_target = nullptr;
++  }
++  s_any.store(false, std::memory_order_relaxed);
++}
++
++}   // namespace AudioXLNS::StopOn
+diff --git a/plugin/src/StopOn.hpp b/plugin/src/StopOn.hpp
+new file mode 100644
+index 0000000..2aaa8f7
+--- /dev/null
++++ b/plugin/src/StopOn.hpp
+@@ -0,0 +1,28 @@
++// A row can name the game's own events that end it: "stopOn": ["mus_q005_dex_confrontation_05_gunshot_end"].
++//
++// The engine's stop events act on the game's own music objects, so a row that replaced a piece of
++// music keeps playing after the game has ended it. Watching those events is the only way a row can
++// end where the original would have. This hooks the sound engine's post once, whatever the row
++// count, and does nothing at all until some row asks for it.
++#ifndef AUDIOXL_STOPON_HPP
++#define AUDIOXL_STOPON_HPP
++
++#include <atomic>
++#include <cstdint>
++#include <shared_mutex>
++#include <unordered_map>
++#include <vector>
++
++namespace AudioXLNS::StopOn {
++
++// Called while a row registers: the event id comes from WwiseHash(event name).
++void Watch(uint32_t aEventId, uint16_t aRow);
++
++// Hooks the sound engine's post. Safe to call when no row watches anything: the detour then costs
++// one relaxed atomic read per posted event.
++void Attach(uintptr_t aPostEvent);
++void Detach();
++
++}   // namespace AudioXLNS::StopOn
++
++#endif   // AUDIOXL_STOPON_HPP
 diff --git a/plugin/src/main.cpp b/plugin/src/main.cpp
 index 8394f50..d866b9a 100644
 --- a/plugin/src/main.cpp
@@ -299,14 +413,14 @@ index 8394f50..d866b9a 100644
        AudioXLPlugin::Get()->Unload();
        break;
 diff --git a/r6/scripts/AudioXL/AudioXL.reds b/r6/scripts/AudioXL/AudioXL.reds
-index cbf4c86..49f390a 100644
+index cbf4c86..60b44d2 100644
 --- a/r6/scripts/AudioXL/AudioXL.reds
 +++ b/r6/scripts/AudioXL/AudioXL.reds
 @@ -65,6 +65,7 @@ public native class AudioXLNative extends IScriptable {
    public static native func Stop(name: CName, fadeOut: Float) -> Bool
    public static native func SetGain(name: CName, gain: Float) -> Bool
    public static native func IsPlaying(name: CName) -> Bool
-+  public static native func PlayingRows() -> array<CName>   
++  public static native func PlayingRows() -> array<CName>
    
    public static native func PlayFrom(name: CName, seconds: Float) -> Bool
    public static native func Position(name: CName) -> Float            
