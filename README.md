@@ -22,7 +22,7 @@ renders the original music into each folder so you can hear it first.
 | Path | What it is |
 |---|---|
 | `mod/` | the mod as shipped, minus anything generated |
-| `patchmod/` | the AudioXL patch mod (built DLL is not in git) |
+| `patchmod/` | the AudioXL patch mod: our AudioXL build (MIT, licence included) and its scripts |
 | `patches/` | our AudioXL changes, as a patch against a named upstream commit |
 | `tools/` | the generator, the loudness tool, packaging, crash-dump reader |
 | `docs/decisions/` | why the mod works the way it does |
