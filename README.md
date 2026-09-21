@@ -17,6 +17,11 @@ bat, and the game plays it where its own music would have played.
 A folder with no track keeps the game's own music. `SoundtrackSwitcher_previews.zip`
 renders the original music into each folder so you can hear it first.
 
+`prepare.exe`, which `rescan.bat` calls, matches your track to the loudness of the
+game's own music before you launch. It never touches the network, it is not code
+signed (so SmartScreen may warn once), it is built by CI from `tools/prepare/`, and
+deleting it only costs you the loudness matching.
+
 ## For developers
 
 | Path | What it is |

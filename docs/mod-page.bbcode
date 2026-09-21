@@ -1,0 +1,81 @@
+[size=5]Soundtrack Switcher[/size]
+
+Replace Cyberpunk 2077's story music with your own, one cue at a time. Drop a track into a folder, run one bat file, and the game plays it exactly where its own music would have played. Every cue you don't replace keeps the music CD Projekt shipped.
+
+No REDmod. No game file is modified: everything this mod does happens through AudioXL's custom sounds and one script.
+
+[size=4]What you get[/size]
+
+[list]
+[*]281 story cues, grouped into folders by quest, each folder named after the quest as the game names it and showing how long the original music runs.
+[*]Any filename. Drop in [b]My Song.mp3[/b], [b]whatever.flac[/b], anything - .mp3, .ogg, .flac and .wav all work. Nothing has to be renamed.
+[*]Loudness matched to the game's own score, so your track sits at the level the scene expects instead of blowing the dialogue away or vanishing under it. A [b]volume.txt[/b] holding e.g. -3 nudges a single cue by ear.
+[*]Your track ends where the game ends its own music, for the 255 cues that have a stop event. Otherwise it ends when the next cue starts. A new cue always takes over from an older one with a 2 second fade, so two tracks never play over each other.
+[*]Looping when you want it: end the filename with [b].loop[/b] and it repeats until the game moves on.
+[*]An on/off switch in Settings -> Mods, no restart needed. Off gives you the game's own music back, not silence.
+[*]Story score only. Radio, combat music, district ambience and diegetic music are all left alone.
+[/list]
+
+[size=4]Requirements[/size]
+
+[list]
+[*]RED4ext
+[*]redscript
+[*]AudioXL 0.4.3
+[*][b]AudioXL patch for Soundtrack Switcher[/b] - the second file on this page. Install it after AudioXL.
+[*]Mod Settings (optional, only for the in-game on/off switch)
+[/list]
+
+[size=4]Installing[/size]
+
+[list=1]
+[*]Install AudioXL, then [b]SoundtrackSwitcher[/b], then [b]AudioXL patch for Soundtrack Switcher[/b], in that order, so the patch's three files win.
+[*]Open the mod's SoundtrackSwitcher folder, find the quest, find the cue.
+[*]Drop your track into that cue's folder.
+[*]Run [b]rescan.bat[/b] in the SoundtrackSwitcher folder. It prints what it found.
+[*]Start the game.
+[/list]
+
+To undo a replacement, delete your track, run rescan.bat again, restart. A folder with no track of yours plays the game's own music.
+
+[b]Vortex:[/b] the mod deploys into your game folder, so everything lives at [b]Cyberpunk 2077\red4ext\plugins\AudioXL\sounds\SoundtrackSwitcher[/b]. You can add rescan.bat as a tool on Vortex's dashboard (Add Tool) if you'd rather launch it from there. Your own tracks are not managed by Vortex, so updating the mod leaves them where they are. If Vortex ever asks about external changes to sounds.json or Cues.reds, keep the changed version - rescan.bat wrote those.
+
+[b]Mod Organizer 2:[/b] run rescan.bat straight from [b]mods\SoundtrackSwitcher[/b], not through MO2, so what it writes lands in the mod folder instead of Overwrite.
+
+[size=4]About prepare.exe[/size]
+
+The mod ships a small tool called prepare.exe, and rescan.bat runs it on each track you add. It decodes your file, measures its loudness the way broadcast does (EBU R128), brings it to the level of the game's own music, limits the peaks so a quiet track can be raised without clipping, and writes the result next to your file.
+
+It runs [b]before[/b] you start the game, which is the whole point: nothing is decoded, measured or converted while you are playing.
+
+[list]
+[*]It never touches the network. It reads the one file you point it at and writes one file beside it.
+[*]It is not code-signed, so Windows SmartScreen may say "Windows protected your PC" the first time, and a virus scanner may flag it simply for being an unknown new binary. Both are false positives.
+[*]The source is on GitHub and every release is built by GitHub Actions, so you can read exactly what it does, or build it yourself and drop your own build in.
+[*]You can also just delete it. The mod still works - your files are then played as they are, without loudness matching.
+[/list]
+
+[size=4]Hearing the original first[/size]
+
+The separate previews download renders the game's own music for every cue into that cue's folder as original.ogg, from your own installed game files. Nothing copyrighted is distributed. It needs WolvenKit's CLI and ffmpeg, which is why it is a separate optional file.
+
+[size=4]Known issue[/size]
+
+The game can crash while loading a save, at roughly 1 load in 9. Loading again works. The fault is inside the game's own audio code and happens with AudioXL and any custom sound registered, with or without this mod's script, so it is not something this mod can fix from the outside. It is under investigation.
+
+[size=4]Performance[/size]
+
+While you play, the mod asks AudioXL once every quarter second what is playing - one call, whose cost follows what is actually playing rather than how many cues you replaced. It wraps no game method and replaces no game class, so it does not conflict with other script mods. Your prepared tracks are memory-mapped, not streamed or decoded during play.
+
+[size=4]Credits[/size]
+
+[list]
+[*][b]DigitalVixen[/b] for AudioXL, which does the actual work of playing a custom sound where the game asked for its own. The patch file on this page is a build of AudioXL with two additions, shared under AudioXL's MIT licence, and those additions have been offered upstream.
+[*]WopsS and the RED4ext team, jac3km4 and the redscript team, psiberx for the tooling the scene runs on.
+[/list]
+
+[size=4]Source and permissions[/size]
+
+MIT. Source, changelog and the reasoning behind each design decision: https://github.com/remo4248/cp2077-soundtrack-switcher
+
+Do what you like with it, credit appreciated.
