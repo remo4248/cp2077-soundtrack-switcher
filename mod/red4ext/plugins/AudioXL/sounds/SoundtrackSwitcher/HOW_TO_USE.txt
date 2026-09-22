@@ -7,6 +7,9 @@ SOUNDTRACK SWITCHER - how to use
    To have it repeat until the game moves on, end the name with .loop - "My Song.loop.mp3".
    (Put only one track in a folder. If there are several, the first by name is used.)
 3. Double-click rescan.bat. It lists what it found and writes sounds.json.
+   If you also downloaded prepare.exe (the loudness tool) and put it in this folder, every
+   track is brought to the level of the game's own music. Without it your files are played
+   exactly as they are.
 4. Restart the game.
 
 A cue folder without a track of yours keeps the game's own music.

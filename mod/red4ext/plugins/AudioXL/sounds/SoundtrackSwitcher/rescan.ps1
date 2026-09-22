@@ -82,7 +82,7 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
     }
     if ($stale) {
         if (-not (Test-Path $prepare)) {
-            Write-Host "  prepare.exe is missing, using $($file.Name) as it is" -ForegroundColor Yellow
+            Write-Host "  no prepare.exe, so $($file.Name) is used as it is - add the loudness tool download next to rescan.bat to match levels" -ForegroundColor Yellow
         } else {
             $result = & $prepare $file.FullName $ready --target $target --offset $offset
             Write-Host "  $name  $result"
