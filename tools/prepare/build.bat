@@ -20,7 +20,15 @@ call "%VSPATH%\VC\Auxiliary\Build\vcvars64.bat" >nul
 
 :build
 if not exist "%HERE%build" mkdir "%HERE%build"
-cl /nologo /std:c++20 /EHsc /O2 /MT /W3 /DNDEBUG /D_CRT_SECURE_NO_WARNINGS /D_USE_MATH_DEFINES ^
+rem Version metadata, so the binary says what it is and who made it. An unsigned exe with none of
+rem that is what virus scanners flag by default, and a reviewer has nothing to go on either.
+rc /nologo /fo "%HERE%build\prepare.res" "%HERE%prepare.rc"
+if errorlevel 1 exit /b 1
+
+rem /guard:cf and the linker flags below are the hardening a normal Windows build has; a binary
+rem without them looks unusual to a scanner.
+cl /nologo /std:c++20 /EHsc /O2 /MT /W3 /guard:cf /DNDEBUG /D_CRT_SECURE_NO_WARNINGS /D_USE_MATH_DEFINES ^
    /I"%HERE%deps" /I"%HERE%deps\queue" ^
    "%HERE%prepare.cpp" "%HERE%deps\ebur128.c" "%HERE%deps\stb_vorbis.c" ^
-   /Fo:"%HERE%build\\" /Fe:"%HERE%build\prepare.exe"
+   /Fo:"%HERE%build\\" /Fe:"%HERE%build\prepare.exe" ^
+   /link "%HERE%build\prepare.res" /GUARD:CF /DYNAMICBASE /NXCOMPAT /HIGHENTROPYVA

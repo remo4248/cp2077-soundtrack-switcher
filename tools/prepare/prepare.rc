@@ -1,0 +1,39 @@
+// Version metadata for prepare.exe.
+//
+// An unsigned binary with no company, product or description is the profile virus scanners treat
+// as suspicious by default, and it gives a human reviewing a false positive nothing to go on. This
+// costs nothing at runtime and says who made it and where the source is.
+#include <windows.h>
+
+#define STS_VERSION 0, 3, 0, 0
+#define STS_VERSION_STR "0.3.0.0"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION STS_VERSION
+PRODUCTVERSION STS_VERSION
+FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+FILEFLAGS 0x0L
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"   // US English, Unicode
+        BEGIN
+            VALUE "CompanyName",      "omermusamanci"
+            VALUE "FileDescription",  "Soundtrack Switcher loudness tool"
+            VALUE "FileVersion",      STS_VERSION_STR
+            VALUE "InternalName",     "prepare"
+            VALUE "LegalCopyright",   "Copyright (c) 2026 omermusamanci. MIT licence."
+            VALUE "OriginalFilename", "prepare.exe"
+            VALUE "ProductName",      "Soundtrack Switcher"
+            VALUE "ProductVersion",   STS_VERSION_STR
+            VALUE "Comments",         "Matches a music file to the game's loudness before launch. No network access. Source: https://github.com/remo4248/cp2077-soundtrack-switcher"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
