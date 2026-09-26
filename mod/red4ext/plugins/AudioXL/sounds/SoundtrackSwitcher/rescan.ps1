@@ -21,7 +21,8 @@ if (Test-Path $cuesFile) {
     foreach ($c in (Get-Content $cuesFile -Raw | ConvertFrom-Json)) { $cues[$c] = $c }
 }
 
-# stops.json lists the game's own events that end each cue, so a replacement can end where the
+# stops.json lists the game's own events that end each cue, written out as AudioXL's stopEvents
+# field, so a replacement can end where the
 # original would have instead of running on into the next scene.
 $stops = @{}
 $stopsFile = Join-Path $root 'stops.json'
@@ -92,7 +93,7 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
     $play = if (Test-Path -LiteralPath $ready) { $ready } else { $file.FullName }
 
     [ordered]@{ name = $name; type = 'axl_music_2d'; loop = ($file.BaseName -like '*.loop'); fadeOut = 2.0
-                stopOn = @($stops[$name] | Where-Object { $_ })   # a cue with no stop event gets none
+                stopEvents = @($stops[$name] | Where-Object { $_ })   # a cue with no stop event gets none
                 file = $play.Substring($root.Length + 1).Replace('\', '/') }
 }
 $rows = @($rows)
@@ -120,7 +121,7 @@ if (-not (Test-Path $cuesDir)) { New-Item -ItemType Directory -Force $cuesDir | 
 Write-Host ''
 foreach ($r in $rows) {
     Write-Host ("  $($r.name)" + $(if ($r.loop) { '  [looping]' }) +
-                $(if (-not $r.stopOn.Count) { '  [no stop event: ends only when another cue starts]' }))
+                $(if (-not $r.stopEvents.Count) { '  [no stop event: ends only when another cue starts]' }))
 }
 foreach ($s in $skipped) { Write-Host "  SKIPPED (not a plain cue name): $s" -ForegroundColor Yellow }
 Write-Host "$($rows.Count) replacement(s), $prepared prepared this run. Start the game to hear them."

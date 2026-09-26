@@ -15,25 +15,13 @@ Requirements
 
 RED4ext
 redscript
-AudioXL (0.4.3)
-AudioXL patch for Soundtrack Switcher - the second file on this page. Install it after AudioXL.
+AudioXL (0.5.0 or newer - that is the version that added what this mod needs)
 Mod Settings (optional, only for the in-game on/off switch)
-
-Why there are two downloads
-
-AudioXL is what lets a mod play its own file where the game asked for its own music. It is excellent, and this mod would not exist without it. However there are two things it cannot do yet that this mod needs:
-
-To be clear: the patch is not a replacement for AudioXL and does not contain it. It swaps out two of AudioXL's files, its plugin and its script, for the same build with those two additions. The rest of AudioXL - the routing bank everything plays through, its settings - has to be installed, which is why AudioXL is listed as a requirement and the patch goes in after it.
-
-1. Ending your track where the scene ends. When the game finishes a piece of music it fires a stop event, but that event acts on the game's own music, not on a replacement. So without the patch your track does not stop when the scene does - it plays on through until some other cue happens to start. The patch lets a sound name the events that end it, so your track ends on the same beat the original would have, with a fade.
-
-2. Turning replacements off in game. The on/off switch works by clearing your cues from the engine's sound table and putting them back, which is what gives you the game's own music again. AudioXL has no way to do that from outside.
-
-Do you have to install it? The mod works without it: your tracks still play. What you lose is the ending - your track runs past the scene it belongs to until another cue starts - and the in-game switch. That first one is why the patch is listed as required rather than optional.
+prepare.exe (optional, the loudness tool on this page - without it your tracks play as they are)
 
 Installing
 
-Install AudioXL, then SoundtrackSwitcher, then AudioXL patch for Soundtrack Switcher, in that order, so the patch wins AudioXL's two files.
+Install AudioXL 0.5.0 or newer, then SoundtrackSwitcher. Nothing of AudioXL's is replaced.
 Open the mod's SoundtrackSwitcher folder, find the quest, find the cue.
 Drop your track into that cue's folder.
 Run rescan.bat in the SoundtrackSwitcher folder. It prints what it found.
@@ -86,7 +74,7 @@ Cues you did not replace cost nothing at all.
 while playing (CPU)
 Nothing of this mod runs while you play. No timer, no polling, no per-frame work. The game starts your track by name and the game's own stop event ends it; the mod's script only runs when a session starts and when it ends.
 Your track is mixed as one stereo voice with no decoding, because it was converted ahead of time. It is the cheapest kind of sound the engine has.
-The patch adds one atomic read per sound event the game posts, and does real work only when a track of yours is playing and the game fires the event that ends it.
+AudioXL costs one atomic read per sound event the game posts to see whether it ends one of your tracks, and does real work only when it does.
 Nothing in the game is wrapped, replaced or hooked in script, so no other script mod pays for this one being installed.
 
 when loading (CPU)
@@ -99,7 +87,7 @@ Nothing. The mod draws nothing at all. The on/off switch is a row in Mod Setting
 
 Credits
 
-DigitalVixen for AudioXL, which does the actual work of playing a custom sound where the game asked for its own. The patch file on this page swaps two of AudioXL's files for the same build with the two additions described above, shared under AudioXL's MIT licence, and those additions have been offered upstream. Install AudioXL first; the patch is not a substitute for it.
+DigitalVixen for AudioXL, which does the actual work of playing a custom sound where the game asked for its own - and for putting the three things this mod needed into AudioXL 0.5.0 (stopEvents, SetEnabled, PlayingSounds), so there is no patch to install any more.
 WopsS and the RED4ext team, jac3km4 and the redscript team, psiberx for the tooling the scene runs on.
 
 Source and permissions

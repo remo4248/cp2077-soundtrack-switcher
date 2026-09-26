@@ -2,7 +2,19 @@
 
 All notable changes to Soundtrack Switcher, newest first.
 
-## [Unreleased]
+## [0.3.0] - 2026-09-26
+
+### Changed
+- **Requires AudioXL 0.5.0**, which added all three things this mod needed, so
+  the separate patch download is gone. One mod, one install, official AudioXL.
+  Delete `AudioXL patch for Soundtrack Switcher` if you have it.
+- The manifest field is AudioXL's `stopEvents` rather than our `stopOn`, and the
+  in-game switch calls `AudioXLAPI.SetEnabled`. **Re-run rescan.bat** after
+  updating so `sounds.json` uses the new field.
+- `prepare.exe` is a separate download: a mod archive holding an unsigned binary
+  gets quarantined by Nexus's scanner. The mod works without it; tracks are then
+  played as they are. It also carries version metadata now and is built with
+  /guard:cf.
 
 ### Removed
 - The four-times-a-second watcher. Stop events end a replaced track for 255 of
@@ -11,8 +23,12 @@ All notable changes to Soundtrack Switcher, newest first.
   one of the other 7 (the credits, two mq304 stingers, the Heist-to-flashback
   bridge, three q110/q112 pieces) means that track plays until the next cue
   starts. See docs/decisions/0007.
-- The patch mod no longer overrides this mod's script: what is left needs only
-  `Stop`, which official AudioXL has, so one script serves both installs.
+
+### Fixed
+- The 14 cues whose names end in a lowercase `_start` were written out as
+  `_START`, which the game hashes to something else, so a track in one of those
+  folders played nothing and said nothing. Among them: Johnny's goodbye in
+  *Where is My Mind*, the braindance cues and Kerry's hum.
 
 ## [0.2.0] - 2026-09-21
 

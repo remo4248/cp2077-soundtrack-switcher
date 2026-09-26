@@ -33,17 +33,6 @@ jobs:
       - name: Build the release zips
         run: python tools\package.py
 
-      # The patch mod needs a clone of AudioXL, so CI only proves our changes still apply cleanly.
-      - name: Check the AudioXL patch still applies
-        run: |
-          git clone --quiet https://github.com/DigitalVixenSWE/cp2077-audio-xl.git audioxl-check
-          cd audioxl-check
-          git checkout --quiet $(Get-Content ..\patches\audioxl-base-commit.txt).Split(' ')[0]
-          git apply ..\patches\audioxl-soundtrackswitcher.patch
-          cd ..
-          python tools\check_patch.py patches\audioxl-soundtrackswitcher.patch audioxl-check
-          Write-Host "patch applies and brings every file it references"
-
       - uses: actions/upload-artifact@v4
         with:
           name: soundtrack-switcher

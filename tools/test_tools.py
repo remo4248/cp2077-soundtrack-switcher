@@ -109,7 +109,7 @@ def test_rescan_takes_any_filename():
                              'mus_test_old_01_START', 'mus_test_lower_01_start'}, (sorted(rows), out)
         assert rows['mus_test_named_01_START']['file'].endswith('My Song.mp3'), rows
         assert rows['mus_test_named_01_START']['loop'] is False
-        assert rows['mus_test_named_01_START']['stopOn'] == [], 'a cue with no stop event gets none'
+        assert rows['mus_test_named_01_START']['stopEvents'] == [], 'a cue with no stop event gets none'
         assert rows['mus_test_loop_01_START']['loop'] is True, 'a .loop. file loops'
         assert rows['mus_test_two_01_START']['file'].endswith('a song.mp3'), 'first by name wins'
         assert 'b song.mp3' in out, 'the file it did not use should be named in the output'

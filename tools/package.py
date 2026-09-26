@@ -1,9 +1,8 @@
 """Builds the downloads into dist/, which is what gets uploaded:
 
-  SoundtrackSwitcher.zip                    the mod: cue folders (empty ones kept), rescan, script
-  AudioXL_patch_for_SoundtrackSwitcher.zip  our AudioXL build, its licence and the two scripts
-  SoundtrackSwitcher_previews.zip           the optional tool that renders the game's own music
-  SoundtrackSwitcher_prepare.zip            prepare.exe on its own, plus the raw prepare.exe
+  SoundtrackSwitcher.zip            the mod: cue folders (empty ones kept), rescan, scripts
+  SoundtrackSwitcher_previews.zip   the optional tool that renders the game's own music
+  SoundtrackSwitcher_prepare.zip    prepare.exe on its own, plus the raw prepare.exe
 
 prepare.exe is packaged separately because a mod archive holding an unsigned binary gets
 quarantined by the file scanner. The mod runs without it - tracks are then played as they are,
@@ -67,12 +66,7 @@ mod = write(os.path.join(ROOT, 'mod'), 'SoundtrackSwitcher.zip')
 assert any(n.endswith('rescan.bat') for n in mod)
 assert not any(n.lower().endswith(('.exe', '.dll')) for n in mod), 'no binaries in the mod download'
 assert any(n.endswith('SoundtrackSwitcher.reds') for n in mod)
-assert not any(n.endswith('.dll') for n in mod), 'the patch mod ships the dll, this one does not'
-
-patch = write(os.path.join(ROOT, 'patchmod'), 'AudioXL_patch_for_SoundtrackSwitcher.zip')
-assert any(n.endswith('AudioXL.dll') for n in patch)
-assert any(n.endswith('AudioXL-LICENSE.md') for n in patch), 'we redistribute AudioXL, so its licence ships'
-assert any(n.endswith('Settings.reds') for n in patch)
+assert any(n.endswith('Settings.reds') for n in mod), 'the on/off switch ships with the mod now'
 
 previews = write(os.path.join(HERE, 'previews_package'), 'SoundtrackSwitcher_previews.zip')
 assert any(n.endswith('make_previews.bat') for n in previews)

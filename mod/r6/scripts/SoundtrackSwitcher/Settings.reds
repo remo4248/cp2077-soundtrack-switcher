@@ -1,8 +1,8 @@
 // The in-game switch, shown by Mod Settings (Settings -> Mods -> Soundtrack Switcher).
 //
-// Turning it off clears each replaced cue's entry in the engine's custom-sound table, so the game
-// finds nothing of ours and plays its own music again; turning it on puts the entries back. A cue
-// already playing stops at once, and no restart is needed either way.
+// Off clears each replaced cue's entry in the engine's custom-sound table, so the game finds
+// nothing of ours and plays its own music again; on puts the entries back. AudioXL 0.5.0 does the
+// work through AudioXLAPI.SetEnabled.
 //
 // Without Mod Settings installed this file compiles to nothing and replacements are simply on.
 module SoundtrackSwitcher
@@ -58,7 +58,7 @@ public class SoundtrackSwitcherSettings extends ScriptableSystem {
 
   @if(ModuleExists("AudioXL"))
   private func SetCue(cue: CName, on: Bool) -> Void {
-    AudioXLAPI.SetRowEnabled(cue, on);
+    AudioXLAPI.SetEnabled(cue, on);
   }
 
   @if(!ModuleExists("AudioXL"))

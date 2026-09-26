@@ -21,29 +21,15 @@ No REDmod. No game file is modified: everything this mod does happens through Au
 [list]
 [*]RED4ext
 [*]redscript
-[*]AudioXL 0.4.3
-[*][b]AudioXL patch for Soundtrack Switcher[/b] - the second file on this page. Install it after AudioXL.
+[*][b]AudioXL 0.5.0[/b] or newer - 0.5.0 is what added the two things this mod needs: a sound that ends on the game's own stop event, and one that can be switched off in game
 [*]Mod Settings (optional, only for the in-game on/off switch)
+[*][b]prepare.exe[/b] (optional, the loudness tool on this page) - without it your tracks play exactly as they are
 [/list]
-
-[size=4]Why there are two downloads[/size]
-
-AudioXL is what lets a mod play its own file where the game asked for its own music. It is excellent, and this mod would not exist without it. Two things it cannot do yet are things this mod needs, so the second download is AudioXL 0.4.3 with those two added.
-
-[b]The patch is not a replacement for AudioXL[/b] and does not contain it. It swaps out two of AudioXL's files - its plugin and its script - for the same build with the additions. The rest of AudioXL, including the routing bank everything plays through, must be installed, which is why it is a requirement and the patch is installed after it.
-
-[b]1. Ending your track where the scene ends.[/b] When the game finishes a piece of music it fires a stop event, but that event acts on the game's own music, not on a replacement. So without the patch your track does not stop when the scene does - it plays on through the next conversation and into the next quest until some other cue happens to start. The patch lets a sound name the events that end it, so your track ends on the same beat the original would have, with a fade.
-
-[b]2. Turning replacements off in game.[/b] The on/off switch works by clearing your cues from the engine's sound table and putting them back, which is what gives you the game's own music again without a restart. AudioXL has no way to do that from outside.
-
-[b]Do you have to install it?[/b] The mod works without it: your tracks still play. What you lose is the ending - your track runs past the scene it belongs to until another cue starts - and the in-game switch. That first one is why the patch is listed as required rather than optional.
-
-[b]Is it safe to replace AudioXL's two files?[/b] They are AudioXL 0.4.3 itself, built from DigitalVixen's own source with those additions and nothing else changed, shared under AudioXL's MIT licence with the licence included. The changes are public and have been offered to AudioXL's author. If they land in an official release, delete this download and keep official AudioXL - this mod will pick the difference up on its own. Remove the patch at any time and you are back to stock AudioXL; nothing else on your install is touched.
 
 [size=4]Installing[/size]
 
 [list=1]
-[*]Install AudioXL, then [b]SoundtrackSwitcher[/b], then [b]AudioXL patch for Soundtrack Switcher[/b], in that order, so the patch's three files win.
+[*]Install AudioXL 0.5.0 or newer, then [b]SoundtrackSwitcher[/b]. Nothing of AudioXL's is replaced or overwritten.
 [*]Open the mod's SoundtrackSwitcher folder, find the quest, find the cue.
 [*]Drop your track into that cue's folder.
 [*]Run [b]rescan.bat[/b] in the SoundtrackSwitcher folder. It prints what it found.
@@ -101,7 +87,7 @@ The design rule was simple: all the expensive work happens when you run rescan.b
 [list]
 [*][b]Nothing of this mod runs while you play.[/b] There is no timer, no polling, no per-frame work. The game starts your track by name and the game's own stop event ends it; the mod's script only runs when a session starts and when it ends.
 [*]Your track is mixed as one stereo voice with no decoding, because it was converted ahead of time. It is the cheapest kind of sound the engine has.
-[*]The patch adds one atomic read per sound event the game posts, and does real work only when a track of yours is playing and the game fires the event that ends it.
+[*]AudioXL costs one atomic read per sound event the game posts, to see whether it ends one of your tracks, and does real work only when it does.
 [*]Nothing in the game is wrapped, replaced or hooked in script, so no other script mod pays for this one being installed.
 [/list]
 
@@ -124,7 +110,7 @@ The design rule was simple: all the expensive work happens when you run rescan.b
 [size=4]Credits[/size]
 
 [list]
-[*][b]DigitalVixen[/b] for AudioXL, which does the actual work of playing a custom sound where the game asked for its own. The patch file on this page swaps two of AudioXL's files for the same build with two additions, shared under AudioXL's MIT licence, and those additions have been offered upstream. It is not a substitute for installing AudioXL.
+[*][b]DigitalVixen[/b] for AudioXL, which does the actual work of playing a custom sound where the game asked for its own - and for taking the three things this mod needed into AudioXL 0.5.0, which is why it no longer ships a patch of its own.
 [*]WopsS and the RED4ext team, jac3km4 and the redscript team, psiberx for the tooling the scene runs on.
 [/list]
 
