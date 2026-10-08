@@ -166,6 +166,26 @@ def test_previews_finds_the_mod_wherever_it_is_unpacked():
         assert find_mod(os.path.join(mod, 'previews')) == mod, 'unpacked into a previews folder'
 
 
+def test_prepare_handles_real_world_paths(prepare):
+    """Two things every music library produces and Windows allows, both of which failed: a name
+    with characters outside the system codepage (YouTube writes U+29F8 for a slash), and a path
+    past 260 characters, which a long quest folder plus a long track name reaches easily."""
+    with tempfile.TemporaryDirectory() as tmp:
+        deep = os.path.join(tmp, 'q305 - Black Steel In The Hour of Chaos, Four Score and Seven, '
+                                 'Leave in Silence, Somewhat Damaged, This Corrosion',
+                            'mus_q305_max_tac_convoy_01 [8m00s]',
+                            'Inception Official Soundtrack Mombasa Hans Zimmer WaterTower')
+        os.makedirs(deep)
+        src = os.path.join(deep, 'Past⧸Present⧸Future ＂quoted＂.wav')
+        out = os.path.join(deep, 'Past⧸Present⧸Future ＂quoted＂.prepared.wav')
+        sine_wav(src)
+        assert len(out) > 260, f'the output path must exceed MAX_PATH for this to test anything: {len(out)}'
+        r = subprocess.run([prepare, src, out, '--target', '-16'], capture_output=True, text=True)
+        assert r.returncode == 0, (r.returncode, r.stdout, r.stderr)
+        assert os.path.exists(out), r.stdout
+        assert peak_of(out) > peak_of(src), 'the quiet tone should still have been raised'
+
+
 if __name__ == '__main__':
     test_cue_naming()
     test_excluded_families()
@@ -178,6 +198,7 @@ if __name__ == '__main__':
     if os.path.exists(built):
         test_prepare_normalises(built)
         test_rescan_prepared_name_is_ascii(built)
+        test_prepare_handles_real_world_paths(built)
         print('ok - naming, filters and prepare.exe')
     else:
         print('ok - naming and filters (prepare.exe not built, skipped its check)')
