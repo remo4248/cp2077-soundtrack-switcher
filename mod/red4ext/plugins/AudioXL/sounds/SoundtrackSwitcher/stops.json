@@ -331,6 +331,9 @@
  "mus_q112_reconnaissance_01_loop_START": [
   "mus_q112_reconnaissance_02_outro_STOP"
  ],
+ "mus_q112_v_and_takemura_START": [
+  "mus_q112_v_and_takemura_STOP"
+ ],
  "mus_q112_wakako_briefing_START": [
   "mus_q112_wakako_briefing_STOP"
  ],
@@ -780,6 +783,9 @@
  ],
  "mus_sq031_cmf_01_START": [
   "mus_sq031_cmf_09_after_crash_STOP"
+ ],
+ "mus_sq031_johnny_b_goode_START": [
+  "mus_sq031_johnny_b_goode_STOP"
  ],
  "mus_sq031_js_funeral_01_START": [
   "mus_sq031_js_funeral_03_STOP"

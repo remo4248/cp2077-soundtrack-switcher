@@ -6,7 +6,8 @@ Usage: python tools/test_tools.py
 import glob, json, os, shutil, struct, subprocess, sys, tempfile, wave
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from generate import EXCLUDE, display_name, fmt, folder_name, quest_of
+from generate import (EXCLUDE, EXTRAS_OUT, display_name, extras_group, fmt, folder_name,
+                      paired_stop, quest_of)
 from previews import filter_graph
 
 
@@ -186,9 +187,37 @@ def test_prepare_handles_real_world_paths(prepare):
         assert peak_of(out) > peak_of(src), 'the quiet tone should still have been raised'
 
 
+def test_extras_split():
+    """The extras mod takes what the main one excludes, minus radio and dev leftovers, and groups by
+    family because these cues are how a place or a fight sounds, not how a mission sounds."""
+    beds = 'mus_ow_animals_START_silent'
+    assert EXCLUDE.search(beds) and not EXTRAS_OUT.search(beds), 'a combat bed belongs to extras'
+    for radio in ('mus_radio_vexelstrom_01', 'mus_q000_nomad_car_chase_radio_emitter'):
+        assert EXTRAS_OUT.search(radio), radio
+    for leftover in ('mus_e3demo_end_START', 'mus_e3_spa_place', 'mus_Miles_Davis_Generique_1'):
+        assert EXTRAS_OUT.search(leftover), leftover
+    assert extras_group(beds) == 'Combat and district beds'
+    assert extras_group('mus_ow_busker_fingers_01_start') == 'Buskers'
+    assert extras_group('mus_q303_concert_START') == 'Concerts and clubs'
+    assert extras_group('mus_q115_hanako_plays_piano_start') == 'Guitars, pianos and records'
+
+
+def test_paired_stop():
+    """The beds name their stop after the cue, which is the only way they get one: their Stop action
+    points at a parent container, not at the object the cue plays."""
+    events = {'mus_ow_animals_STOP_silent', 'mus_arcade_oldschool_STOP', 'mus_q005_x_stop'}
+    assert paired_stop('mus_ow_animals_START_silent', events) == 'mus_ow_animals_STOP_silent'
+    assert paired_stop('mus_arcade_oldschool_START', events) == 'mus_arcade_oldschool_STOP'
+    assert paired_stop('mus_q005_x_start', events) == 'mus_q005_x_stop'
+    assert paired_stop('mus_q005_dex_confrontation_01_p1', events) is None, 'no START, no pairing'
+    assert paired_stop('mus_q110_church_ceremony_START', events) is None, 'no such stop event'
+
+
 if __name__ == '__main__':
     test_cue_naming()
     test_excluded_families()
+    test_extras_split()
+    test_paired_stop()
     test_filter_graph()
     test_rescan_takes_any_filename()
     test_script_does_not_poll()

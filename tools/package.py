@@ -1,6 +1,7 @@
 """Builds the downloads into dist/, which is what gets uploaded:
 
   SoundtrackSwitcher.zip            the mod: cue folders (empty ones kept), rescan, scripts
+  SoundtrackSwitcherExtras.zip      the music the main mod leaves out, minus radio; no scripts
   SoundtrackSwitcher_previews.zip   the optional tool that renders the game's own music
   SoundtrackSwitcher_prepare.zip    prepare.exe on its own, plus the raw prepare.exe
 
@@ -67,6 +68,11 @@ assert any(n.endswith('rescan.bat') for n in mod)
 assert not any(n.lower().endswith(('.exe', '.dll')) for n in mod), 'no binaries in the mod download'
 assert any(n.endswith('SoundtrackSwitcher.reds') for n in mod)
 assert any(n.endswith('Settings.reds') for n in mod), 'the on/off switch ships with the mod now'
+
+extras = write(os.path.join(ROOT, 'mod_extras'), 'SoundtrackSwitcherExtras.zip')
+assert any(n.endswith('rescan.bat') for n in extras)
+assert not any(n.endswith('.reds') for n in extras), 'the extras mod ships no scripts'
+assert not any(n.lower().endswith(('.exe', '.dll')) for n in extras)
 
 previews = write(os.path.join(HERE, 'previews_package'), 'SoundtrackSwitcher_previews.zip')
 assert any(n.endswith('make_previews.bat') for n in previews)

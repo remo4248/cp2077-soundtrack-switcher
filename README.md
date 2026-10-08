@@ -15,6 +15,12 @@ bat, and the game plays it where its own music would have played.
 A folder with no track keeps the game's own music. `SoundtrackSwitcher_previews.zip`
 renders the original music into each folder so you can hear it first.
 
+**SoundtrackSwitcherExtras.zip** is the music this mod leaves out, minus the radio: the
+combat and district beds, the open world, buskers, concerts and clubs, guitars, pianos
+and records, source music in scenes, arcades, elevators and gigs. 145 cues in 8 folders,
+grouped by family rather than by quest. It works the same way, ships no scripts, and is
+independent - install either or both.
+
 `prepare.exe`, which `rescan.bat` calls, matches your track to the loudness of the
 game's own music before you launch. It never touches the network, it is not code
 signed (so SmartScreen may warn once), it is built by CI from `tools/prepare/`, and
@@ -25,12 +31,14 @@ deleting it only costs you the loudness matching.
 | Path | What it is |
 |---|---|
 | `mod/` | the mod as shipped, minus anything generated |
+| `mod_extras/` | the extras mod: the cues the main one excludes, minus radio |
 | `tools/` | the generator, the loudness tool, packaging, crash-dump reader |
 | `docs/decisions/` | why the mod works the way it does |
 
 ```
 tools\prepare\build.bat     builds prepare.exe (MSVC, no CMake)
 python tools\generate.py <data> mod    rebuilds the cue tree from game data
+python tools\generate.py <data> mod_extras --extras   the same for the extras mod
 python tools\package.py     builds the release zips into dist\
 python tools\test_tools.py  runs the checks that need no game data
 ```

@@ -1,0 +1,335 @@
+{
+ "mus_arcade_oldschool_START": [
+  "mus_arcade_oldschool_STOP"
+ ],
+ "mus_arcade_shooter_START": [
+  "mus_arcade_shooter_STOP"
+ ],
+ "mus_elevator_init": [
+  "mus_elevator_stop"
+ ],
+ "mus_ep1_ow_animals_START_silent": [
+  "mus_ep1_ow_animals_STOP",
+  "mus_ep1_ow_animals_STOP_silent"
+ ],
+ "mus_ep1_ow_arasaka_START_silent": [
+  "mus_ep1_ow_arasaka_STOP",
+  "mus_ep1_ow_arasaka_STOP_silent"
+ ],
+ "mus_ep1_ow_cyberpsycho_START_silent": [
+  "mus_ep1_ow_cyberpsycho_STOP",
+  "mus_ep1_ow_cyberpsycho_STOP_silent"
+ ],
+ "mus_ep1_ow_generic_START_silent": [
+  "mus_ep1_ow_generic_STOP",
+  "mus_ep1_ow_generic_STOP_silent"
+ ],
+ "mus_ep1_ow_militia_START_silent": [
+  "mus_ep1_ow_militia_STOP",
+  "mus_ep1_ow_militia_STOP_silent"
+ ],
+ "mus_ep1_ow_scav_START_silent": [
+  "mus_ep1_ow_scav_STOP",
+  "mus_ep1_ow_scav_STOP_silent"
+ ],
+ "mus_ep1_ow_technical_path_START_silent": [
+  "mus_ep1_ow_technical_path_STOP",
+  "mus_ep1_ow_technical_path_STOP_silent"
+ ],
+ "mus_ep1_ow_voo_doos_START_silent": [
+  "mus_ep1_ow_voo_doos_STOP",
+  "mus_ep1_ow_voo_doos_STOP_silent"
+ ],
+ "mus_mq002_scav_START_silent": [
+  "mus_mq002_scav_STOP_silent",
+  "mus_mq024_scav_STOP_silent",
+  "mus_mq036_scav_STOP_silent",
+  "mus_q001_girl_START",
+  "mus_q001_scav_STOP_silent"
+ ],
+ "mus_mq003_militech_START_silent": [
+  "mus_mq003_militech_STOP_silent",
+  "mus_sq027_militech_STOP_silent",
+  "mus_sts_hey_gle_01_tucker_albach_02_STOP"
+ ],
+ "mus_mq024_scav_START_silent": [
+  "mus_mq002_scav_STOP_silent",
+  "mus_mq024_scav_STOP_silent",
+  "mus_mq036_scav_STOP_silent",
+  "mus_q001_girl_START",
+  "mus_q001_scav_STOP_silent"
+ ],
+ "mus_mq026_maelstrom_START_silent": [
+  "mus_mq026_maelstrom_STOP_silent",
+  "mus_mq032_maelstrom_STOP_silent",
+  "mus_q003_maelstrom_STOP_silent"
+ ],
+ "mus_mq032_maelstrom_START_silent": [
+  "mus_mq026_maelstrom_STOP_silent",
+  "mus_mq032_maelstrom_STOP_silent",
+  "mus_q003_maelstrom_STOP_silent"
+ ],
+ "mus_mq036_scav_START_silent": [
+  "mus_mq002_scav_STOP_silent",
+  "mus_mq024_scav_STOP_silent",
+  "mus_mq036_scav_STOP_silent",
+  "mus_q001_girl_START",
+  "mus_q001_scav_STOP_silent"
+ ],
+ "mus_mq301_car_cmb_source_START": [
+  "mus_mq301_car_cmb_score_STOP"
+ ],
+ "mus_mq304_wake_source_START": [
+  "mus_mq304_wake_source_STOP"
+ ],
+ "mus_ow_6th_street_START_silent": [
+  "mus_ow_6th_street_STOP_silent"
+ ],
+ "mus_ow_animals_START_silent": [
+  "mus_ow_animals_STOP_silent"
+ ],
+ "mus_ow_arasaka_START": [
+  "mus_ow_arasaka_STOP"
+ ],
+ "mus_ow_badlands_START_silent": [
+  "mus_ow_badlands_STOP_silent"
+ ],
+ "mus_ow_busker_chippin_in_01_start": [
+  "mus_ow_busker_chippin_in_04_stop"
+ ],
+ "mus_ow_busker_female_01_start": [
+  "mus_ow_busker_female_01_stop"
+ ],
+ "mus_ow_busker_fingers_01_start": [
+  "mus_ow_busker_fingers_04_stop"
+ ],
+ "mus_ow_busker_pon_pon_01_start": [
+  "mus_ow_busker_ponpon_start_stop"
+ ],
+ "mus_ow_busker_ponpon_start_stop": [
+  "mus_ow_busker_ponpon_start_stop"
+ ],
+ "mus_ow_generic_START_silent": [
+  "mus_ow_generic_STOP_silent"
+ ],
+ "mus_ow_kang_tao_START_silent": [
+  "mus_ow_kang_tao_STOP_silent"
+ ],
+ "mus_ow_maelstrom_START_silent": [
+  "mus_ow_maelstrom_STOP_silent"
+ ],
+ "mus_ow_militech_START_silent": [
+  "mus_ow_militech_STOP_silent"
+ ],
+ "mus_ow_phone_START": [
+  "mus_ow_phone_STOP"
+ ],
+ "mus_ow_piano_source_start": [
+  "mus_ow_piano_source_stop"
+ ],
+ "mus_ow_police_START_silent": [
+  "mus_ow_police_STOP_silent"
+ ],
+ "mus_ow_rh_tribute_START": [
+  "mus_ow_rh_tribute_STOP"
+ ],
+ "mus_ow_scav_START_silent": [
+  "mus_ow_scav_STOP_silent"
+ ],
+ "mus_ow_tygerclaws_START_silent": [
+  "mus_ow_tygerclaws_STOP_silent",
+  "mus_sq024_sts_wat_kab_08_STOP"
+ ],
+ "mus_ow_valentinos_START_silent": [
+  "mus_ow_valentinos_STOP_silent"
+ ],
+ "mus_ow_voo_doos_START_silent": [
+  "mus_ow_voo_doos_STOP",
+  "mus_ow_voo_doos_STOP_silent"
+ ],
+ "mus_q000_corpo_standoff_source_START": [
+  "mus_q000_corpo_standoff_outro_STOP"
+ ],
+ "mus_q000_nomad_car_chase_source_START": [
+  "mus_q000_nomad_car_chase_STOP"
+ ],
+ "mus_q000_sk_parking_01_out_of_elevator": [
+  "mus_q000_sk_parking_05_end"
+ ],
+ "mus_q001_car_combat_source_START": [
+  "mus_q001_car_combat_combat_STOP"
+ ],
+ "mus_q001_scav_START_silent": [
+  "mus_mq002_scav_STOP_silent",
+  "mus_mq024_scav_STOP_silent",
+  "mus_mq036_scav_STOP_silent",
+  "mus_q001_girl_START",
+  "mus_q001_scav_STOP_silent"
+ ],
+ "mus_q001_scav_source_START": [
+  "mus_q001_scav_source_STOP"
+ ],
+ "mus_q001_v_apartment_chippin_in_START_delSTOP": [
+  "mus_q001_v_apartment_chippin_in_START_delSTOP"
+ ],
+ "mus_q003_maelstrom_START_silent": [
+  "mus_mq026_maelstrom_STOP_silent",
+  "mus_mq032_maelstrom_STOP_silent",
+  "mus_q003_maelstrom_STOP_silent"
+ ],
+ "mus_q004_bd_source_normal": [
+  "mus_q004_bd_source_STOP",
+  "mus_q004_bd_source_rev"
+ ],
+ "mus_q004_bd_source_rev": [
+  "mus_q004_bd_source_STOP",
+  "mus_q004_bd_source_normal"
+ ],
+ "mus_q005_konpeki_elevator_START": [
+  "mus_q005_konpeki_elevator_STOP"
+ ],
+ "mus_q005_the_heist_START_silent": [
+  "mus_q005_the_heist_STOP_silent"
+ ],
+ "mus_q101_gig_START": [
+  "mus_q101_gig_STOP"
+ ],
+ "mus_q101_gig_chippin_in_01_START": [
+  "mus_q101_gig_chippin_in_02_outro_STOP"
+ ],
+ "mus_q101_js_and_kerry_source_START": [
+  "mus_q101_js_and_kerry_source_STOP"
+ ],
+ "mus_q103_ghost_town_START_silent": [
+  "mus_q103_ghost_town_STOP_silent",
+  "mus_sq004_car_chase_stop_ghost_town_combo"
+ ],
+ "mus_q103_ghost_town_light_START_silent": [
+  "mus_q103_ghost_town_light_STOP_silent"
+ ],
+ "mus_q104_kang_tao_START_silent": [
+  "mus_q104_kang_tao_STOP_silent"
+ ],
+ "mus_q105_fingers_01_source_START": [
+  "mus_q105_fingers_03_exit_STOP",
+  "mus_q105_fingers_03_outro_STOP"
+ ],
+ "mus_q108_arasaka_gig_intro_START": [
+  "mus_q108_arasaka_gig_main_STOP"
+ ],
+ "mus_q110_mall_START_silent": [
+  "mus_q110_chippinin_START_PUBLIC",
+  "mus_q110_mall_STOP_silent"
+ ],
+ "mus_q112_parade_START_silent": [
+  "mus_q112_parade_STOP_silent"
+ ],
+ "mus_q112_parade_source_start": [
+  "mus_q112_parade_source_stop"
+ ],
+ "mus_q112_warehouse_START_silent": [
+  "mus_mq021_warehouse_03_STOP",
+  "mus_q112_warehouse_STOP_silent"
+ ],
+ "mus_q114_maglev_00_00_silent_START": [
+  "mus_mq022_maglev_03_STOP",
+  "mus_q114_maglev_03_03_outro_STOP"
+ ],
+ "mus_q114_maglev_00_01_stealth_START": [
+  "mus_mq022_maglev_03_STOP",
+  "mus_q114_maglev_03_03_outro_STOP"
+ ],
+ "mus_q115_chippin_in_START": [
+  "mus_q115_chippin_in_STOP"
+ ],
+ "mus_q115_hanako_plays_piano_start": [
+  "mus_q115_hanako_plays_piano_post_stop",
+  "mus_q306_spaceport_piano_post_stop"
+ ],
+ "mus_q204_guitarshop_js_START": [
+  "mus_q204_guitarshop_js_START_STOP",
+  "mus_q204_guitarshop_js_STOP"
+ ],
+ "mus_q204_guitarshop_js_START_STOP": [
+  "mus_q204_guitarshop_js_START_STOP",
+  "mus_q204_guitarshop_js_STOP"
+ ],
+ "mus_q204_guitarshop_steve_START": [
+  "mus_q204_guitarshop_steve_START_STOP",
+  "mus_q204_guitarshop_steve_STOP"
+ ],
+ "mus_q204_guitarshop_steve_START_STOP": [
+  "mus_q204_guitarshop_steve_START_STOP",
+  "mus_q204_guitarshop_steve_STOP"
+ ],
+ "mus_q204_js_apartment_vinyl_01_START": [
+  "mus_q204_js_apartment_vinyl_02_STOP"
+ ],
+ "mus_q303_concert_START": [
+  "mus_q303_concert_STOP",
+  "mus_q303_concert_bd_03_meta",
+  "mus_q303_concert_bd_04_STOP"
+ ],
+ "mus_q303_concert_bd_02": [
+  "mus_q303_concert_STOP",
+  "mus_q303_concert_bd_03_meta",
+  "mus_q303_concert_bd_04_STOP"
+ ],
+ "mus_q305_brooklyn_party_START": [
+  "mus_q305_brooklyn_party_STOP"
+ ],
+ "mus_q305_brooklyn_vinyl_01_START": [
+  "mus_q305_brooklyn_vinyl_06_STOP"
+ ],
+ "mus_q305_brooklyn_vinyl_reed_START": [
+  "mus_q305_brooklyn_vinyl_reed_STOP"
+ ],
+ "mus_q306_spaceport_piano_start": [
+  "mus_q115_hanako_plays_piano_post_stop",
+  "mus_q306_spaceport_piano_post_stop"
+ ],
+ "mus_roach_race_START": [
+  "mus_roach_race_STOP"
+ ],
+ "mus_sq006_piano_source_start": [
+  "mus_sq006_piano_source_stop"
+ ],
+ "mus_sq011_concert_START": [
+  "mus_sq011_concert_STOP"
+ ],
+ "mus_sq017_dark_matter_club_user_friendly_START": [
+  "mus_sq017_dark_matter_club_user_friendly_STOP"
+ ],
+ "mus_sq017_dark_matter_club_user_friendly_START_after_ker": [
+  "mus_sq017_dark_matter_club_user_friendly_STOP_after_ker"
+ ],
+ "mus_sq018_offrenda_source_START": [
+  "mus_sq018_offrenda_source_STOP"
+ ],
+ "mus_sq026_megabuilding_combo_START_silent": [
+  "mus_sq026_megabuilding_combo_STOP_silent"
+ ],
+ "mus_sq027_militech_START_silent": [
+  "mus_mq003_militech_STOP_silent",
+  "mus_sq027_militech_STOP_silent",
+  "mus_sts_hey_gle_01_tucker_albach_02_STOP"
+ ],
+ "mus_sq027_nomad_guitar_01_START": [
+  "mus_sq027_nomad_guitar_02_STOP",
+  "mus_sq027_nomad_guitar_spliced_stop"
+ ],
+ "mus_sq027_nomad_guitar_spliced_start_silent": [
+  "mus_sq027_nomad_guitar_02_STOP",
+  "mus_sq027_nomad_guitar_spliced_stop"
+ ],
+ "mus_sq028_kerry_guitar_01_start": [
+  "mus_sq028_kerry_guitar_05_stop"
+ ],
+ "mus_sq028_kerry_vinyl_chippin_in_START": [
+  "mus_sq028_kerry_vinyl_chippin_in_STOP"
+ ],
+ "mus_sts_cyberpsycho_START_silent": [
+  "mus_mq030_cyberpsycho_STOP_silent",
+  "mus_sts_cyberpsycho_STOP_silent"
+ ]
+}

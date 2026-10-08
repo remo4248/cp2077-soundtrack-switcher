@@ -1,0 +1,37 @@
+SOUNDTRACK SWITCHER - EXTRAS - how to use
+=========================================
+
+This is the music the main mod leaves out: the combat and district beds, the open world,
+buskers, concerts and clubs, guitars, pianos and records, source music in scenes, arcades,
+elevators and gigs. Radio is not here - replace that with a radio mod.
+
+It works exactly like the main mod and is independent of it: install either, or both.
+
+1. Find the folder, then the cue inside it. The cue folder shows the event name and
+   [how much music the original holds].
+2. Drop your track in. Any name, any of .mp3, .ogg, .flac, .wav.
+3. Double-click rescan.bat.
+4. Restart the game.
+
+To undo: delete your track, run rescan.bat again, restart.
+
+WHAT IS DIFFERENT HERE
+
+These cues are not scene music, so two things behave differently:
+
+  They are long. A district bed runs 8 to 13 minutes because it is a loop the game keeps
+  under you for as long as you are in that place or that fight. A 3 minute track of yours
+  ends after 3 minutes and leaves silence, so end the filename with .loop to have it
+  repeat - "My Song.loop.mp3".
+
+  The game layers them. A combat bed fades layers in and out as a fight heats up and
+  settles. Your track replaces the whole thing with one fixed piece of music, so that
+  layering is gone. That is the trade: your music, played straight.
+
+Buskers and some performances are short fragments of a few seconds, pieces of one
+performance rather than a whole song. Listen to the original first if you have the
+previews download.
+
+There is no in-game on/off switch for this one, and no script: it is folders, this
+script and the manifest AudioXL reads. prepare.exe (the loudness tool download) works
+here too - put it next to this file and rescan will use it.
