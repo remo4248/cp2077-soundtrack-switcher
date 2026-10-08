@@ -197,7 +197,10 @@ def test_extras_split():
     for leftover in ('mus_e3demo_end_START', 'mus_e3_spa_place', 'mus_Miles_Davis_Generique_1'):
         assert EXTRAS_OUT.search(leftover), leftover
     assert extras_group(beds) == 'Combat and district beds'
-    assert extras_group('mus_ow_busker_fingers_01_start') == 'Buskers'
+    assert extras_group('mus_ow_busker_fingers_01_start') == 'Street performers'
+    assert extras_group('mus_ow_handpan_start') == 'Street performers', 'the handpan is a street act'
+    assert extras_group('mus_ow_handpan_phrase_3') == 'Street performers'
+    assert extras_group('mus_sq028_kerry_guitar_01_start') == 'Guitars, pianos and records'
     assert extras_group('mus_q303_concert_START') == 'Concerts and clubs'
     assert extras_group('mus_q115_hanako_plays_piano_start') == 'Guitars, pianos and records'
 

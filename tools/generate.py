@@ -25,7 +25,9 @@ EXTRAS_OUT = re.compile(r'^mus_(radio|custom_radio|e3|test)|jukebox|dj_|emitter|
 # What the folder is called, by family rather than by quest: these cues are how a place or a fight
 # sounds, not how a mission sounds, so a player looks for "the combat beds", not for q005.
 EXTRAS_GROUPS = (
-    (re.compile(r'busker', re.I),                        'Buskers'),
+    # the handpan player and the guitar buskers are the same thing to a player: someone on a
+    # street corner. Matched before the instrument rule below, which would otherwise take handpan.
+    (re.compile(r'^mus_(ep1_)?ow_(busker|handpan)|busker', re.I), 'Street performers'),
     (re.compile(r'concert|_club|club_|party', re.I),     'Concerts and clubs'),
     (re.compile(r'guitar|piano|handpan|vinyl|chippin_in', re.I), 'Guitars, pianos and records'),
     (re.compile(r'source', re.I),                        'Source music in scenes'),
@@ -178,7 +180,8 @@ if __name__ == '__main__':
     _stops = stop_events(sys.argv[1])
     assert 'mus_q005_dex_confrontation_05_gunshot_end' in _stops['mus_q005_dex_confrontation_01_p1'], _stops
     assert extras_group('mus_ow_animals_START_silent') == 'Combat and district beds'
-    assert extras_group('mus_ow_busker_fingers_01_start') == 'Buskers'
+    assert extras_group('mus_ow_busker_fingers_01_start') == 'Street performers'
+    assert extras_group('mus_ow_handpan_start') == 'Street performers'
     assert extras_group('mus_q204_js_apartment_vinyl_01_START') == 'Guitars, pianos and records'
     assert extras_group('mus_ow_arasaka_START') == 'Open world'
     assert EXTRAS_OUT.search('mus_radio_vexelstrom_01') and EXTRAS_OUT.search('mus_e3demo_end_START')

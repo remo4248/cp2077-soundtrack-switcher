@@ -8,7 +8,8 @@ All notable changes to Soundtrack Switcher, newest first.
 - **Soundtrack Switcher Extras**, a second mod for the music this one leaves out,
   minus the radio: 145 cues in 8 folders - the combat and district beds, the open
   world, buskers, concerts and clubs, guitars, pianos and records, source music in
-  scenes, arcades, elevators and gigs. Same workflow, no scripts, independent of
+  scenes, arcades, elevators and gigs - the street handpan player and the guitar
+  buskers together under Street performers. Same workflow, no scripts, independent of
   the main mod. The beds are 8 to 13 minute loops the game layers as a fight heats
   up; a replacement is one fixed track, so end the name with `.loop` to have it
   repeat.
