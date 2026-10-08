@@ -29,8 +29,10 @@ These cues are not scene music, so two things behave differently:
   layering is gone. That is the trade: your music, played straight.
 
 Buskers and some performances are short fragments of a few seconds, pieces of one
-performance rather than a whole song. Listen to the original first if you have the
-previews download.
+performance rather than a whole song, so listening to the original first is worth it
+here more than anywhere: unpack the previews download into this folder too and run
+make_previews.bat. A preview of a combat bed plays all of its layers one after another,
+which is the material the game fades in and out while you fight.
 
 There is no in-game on/off switch for this one, and no script: it is folders, this
 script and the manifest AudioXL reads. prepare.exe (the loudness tool download) works
