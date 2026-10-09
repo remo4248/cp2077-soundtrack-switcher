@@ -28,6 +28,14 @@ These cues are not scene music, so two things behave differently:
   settles. Your track replaces the whole thing with one fixed piece of music, so that
   layering is gone. That is the trade: your music, played straight.
 
+A STREET PERFORMANCE IS ONE SOUND, NOT A PLAYLIST
+
+A busker's song is a single piece of music the game keeps playing while it steps through
+sections. Only the first event starts audio - the ones numbered after it (_02, _03 and so
+on) just tell the already playing music to move on, so there is nothing to replace in them
+and they are not folders here. Replace the _01_start cue and the whole performance becomes
+your track; the handpan player works the same way, with mus_ow_handpan as the one to take.
+
 Buskers and some performances are short fragments of a few seconds, pieces of one
 performance rather than a whole song, so listening to the original first is worth it
 here more than anywhere: unpack the previews download into this folder too and run
@@ -37,3 +45,10 @@ which is the material the game fades in and out while you fight.
 There is no in-game on/off switch for this one, and no script: it is folders, this
 script and the manifest AudioXL reads. prepare.exe (the loudness tool download) works
 here too - put it next to this file and rescan will use it.
+
+MUTING A CUE INSTEAD OF REPLACING IT
+
+Put a file called mute.txt in the cue folder - empty, the name is all that matters - and run
+rescan.bat. That cue then plays nothing at all, which AudioXL does with its mod_skip type: no
+audio file, no REDmod, nothing to prepare. If a track and mute.txt are both in the folder, the
+mute wins and rescan says so.

@@ -25,7 +25,12 @@ def filter_graph(segs, have):
         # ponytail: every track of a segment is mixed, so alternate (switch) tracks play on top of each other
         mix = f'amix=inputs={len(media)}:normalize=0,' if len(media) > 1 else 'anull,'
         trim = f'atrim=0:{ms / 1000:.3f},' if ms > 0 else ''
-        parts.append(f'{labels}{mix}{trim}anull[s{n_seg}]')
+        # A cue can reach dozens of segments - entries, exits and alternates the game would never
+        # play in a row - and butt-joining them clicks. 15 ms either end costs nothing and the
+        # preview stops sounding like a fault.
+        fade = (f'afade=t=in:st=0:d=0.015,afade=t=out:st={ms / 1000 - 0.015:.3f}:d=0.015,'
+                if ms > 100 else '')
+        parts.append(f'{labels}{mix}{trim}{fade}anull[s{n_seg}]')
         n_seg += 1
     if not n_seg: return None, None
     graph = ';'.join(parts) + ';' + ''.join(f'[s{i}]' for i in range(n_seg)) + f'concat=n={n_seg}:v=0:a=1,alimiter[out]'

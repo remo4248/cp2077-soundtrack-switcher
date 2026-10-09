@@ -39,8 +39,11 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
     $found = @(Get-ChildItem -LiteralPath $dir.FullName -File | Where-Object {
         $_.Extension -in '.mp3', '.ogg', '.flac', '.wav' -and
         $_.BaseName -ne 'original' -and $_.BaseName -notlike '*.prepared' } | Sort-Object Name)
+    # A file called mute.txt instead of a track silences the cue: AudioXL's mod_skip type takes no
+    # file and plays nothing where the game asked for that music.
+    $mute = Test-Path -LiteralPath (Join-Path $dir.FullName 'mute.txt')
     $file = $found | Select-Object -First 1
-    if (-not $file) { continue }
+    if (-not $file -and -not $mute) { continue }
     if ($found.Count -gt 1) {
         $ignored = ($found | Select-Object -Skip 1 | ForEach-Object Name) -join ', '
         Write-Host "  $($dir.Name): using $($file.Name), ignoring $ignored" -ForegroundColor Yellow
@@ -64,6 +67,12 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
     # behind to be played instead. The leftovers are ours and regenerable, so they go.
     # AudioXL opens its files through narrow-string paths, so the name it is given stays ASCII
     # whatever the track is called.
+    if ($mute) {
+        if ($file) { Write-Host "  $($dir.Name): mute.txt wins, $($file.Name) is ignored" -ForegroundColor Yellow }
+        [ordered]@{ name = $name; type = 'mod_skip' }
+        continue
+    }
+
     $ready = Join-Path $dir.FullName (($file.BaseName -replace '[^A-Za-z0-9 ._-]', '_') + '.prepared.wav')
     Get-ChildItem -LiteralPath $dir.FullName -File -Filter '*.prepared.wav' |
         Where-Object { $_.Name -ne (Split-Path $ready -Leaf) } | Remove-Item -Force
@@ -123,6 +132,7 @@ if (Test-Path (Join-Path $cuesDir 'SoundtrackSwitcher.reds')) {
 
 Write-Host ''
 foreach ($r in $rows) {
+    if ($r.type -eq 'mod_skip') { Write-Host "  $($r.name)  [muted]"; continue }
     Write-Host ("  $($r.name)" + $(if ($r.loop) { '  [looping]' }) +
                 $(if (-not $r.stopEvents.Count) { '  [no stop event: ends only when another cue starts]' }))
 }

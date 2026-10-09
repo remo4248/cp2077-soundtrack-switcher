@@ -34,6 +34,8 @@ def test_filter_graph():
     inputs, graph = filter_graph([(1, 2000, [10, 11]), (2, 0, [12]), (3, 500, [99])], {10, 11, 12})
     assert inputs == ['10.ogg', '11.ogg', '12.ogg'], inputs
     assert '[i0][i1]amix=inputs=2' in graph and 'atrim=0:2.000' in graph and 'concat=n=2' in graph
+    # the joins are faded: concatenating segments the game never plays in a row clicks otherwise
+    assert 'afade=t=in:st=0:d=0.015' in graph and 'afade=t=out:st=1.985:d=0.015' in graph, graph
 
 
 def sine_wav(path, seconds=3, rate=48000, amplitude=0.02):
@@ -105,9 +107,11 @@ def test_rescan_takes_any_filename():
             'mus_test_two_01 [1m00s]':   ['b song.mp3', 'a song.mp3'],
             'mus_test_old_01 [1m00s]':   ['replace.mp3'],
             'mus_test_lower_01 [1m00s]': ['Quiet.wav'],
+            'mus_test_mute_01 [1m00s]':  ['mute.txt'],
         })
         assert set(rows) == {'mus_test_named_01_START', 'mus_test_loop_01_START', 'mus_test_two_01_START',
-                             'mus_test_old_01_START', 'mus_test_lower_01_start'}, (sorted(rows), out)
+                             'mus_test_old_01_START', 'mus_test_lower_01_start',
+                             'mus_test_mute_01_START'}, (sorted(rows), out)
         assert rows['mus_test_named_01_START']['file'].endswith('My Song.mp3'), rows
         assert rows['mus_test_named_01_START']['loop'] is False
         assert rows['mus_test_named_01_START']['stopEvents'] == [], 'a cue with no stop event gets none'
@@ -116,6 +120,11 @@ def test_rescan_takes_any_filename():
         assert 'b song.mp3' in out, 'the file it did not use should be named in the output'
         assert rows['mus_test_old_01_START']['file'].endswith('replace.mp3'), 'old folders keep working'
         assert 'mus_test_lower_01_start' in rows, 'a cue that really ends in _start keeps that spelling'
+        # a mute.txt in the folder silences the cue: AudioXL's mod_skip, which needs no file
+        mute = rows['mus_test_mute_01_START']
+        assert mute['type'] == 'mod_skip', mute
+        assert 'file' not in mute, mute
+        assert '[muted]' in out, out
 
 
 def test_rescan_prepared_name_is_ascii(prepare):

@@ -18,3 +18,10 @@ To undo a replacement: delete your track, run rescan.bat, restart.
 
 About looping: a looping track is held in memory instead of streamed from disk,
 which costs roughly 10 MB per minute of audio. Use it for short tracks.
+
+MUTING A CUE INSTEAD OF REPLACING IT
+
+Put a file called mute.txt in the cue folder - empty, the name is all that matters - and run
+rescan.bat. That cue then plays nothing at all, which AudioXL does with its mod_skip type: no
+audio file, no REDmod, nothing to prepare. If a track and mute.txt are both in the folder, the
+mute wins and rescan says so.
