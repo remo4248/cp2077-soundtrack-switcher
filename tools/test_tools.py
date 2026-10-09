@@ -127,19 +127,26 @@ def test_rescan_takes_any_filename():
         assert '[muted]' in out, out
 
 
-def test_rescan_prepared_name_is_ascii(prepare):
-    """AudioXL opens its files through narrow-string paths, so what prepare.exe writes must stay
-    ASCII however the player named their track - and the row must point at that prepared file."""
+def test_rescan_prepared_file_is_short_and_ascii(prepare):
+    """AudioXL opens a row with a plain CreateFileW, so a path over 260 characters cannot be read
+    and a name outside the codepage is mangled. Both are decided by where we put the prepared file,
+    not by what the player called their track: one folder, one file per cue."""
     with tempfile.TemporaryDirectory() as tmp:
         root = os.path.join(tmp, 'red4ext', 'plugins', 'AudioXL', 'sounds', 'SoundtrackSwitcher')
-        os.makedirs(os.path.join(root, 'q000 - Test', 'mus_test_utf8_01 [1m00s]'))
-        sine_wav(os.path.join(root, 'q000 - Test', 'mus_test_utf8_01 [1m00s]', 'Café Søng.wav'))
+        # the real worst case: this mod's longest quest folder and a long track name
+        cue = os.path.join(root, 'q305 - Black Steel In The Hour of Chaos, Four Score and Seven, '
+                                 'Leave in Silence, Somewhat Damaged, This Corrosion',
+                           'mus_test_utf8_01 [1m00s]')
+        os.makedirs(cue)
+        sine_wav(os.path.join(cue, 'Café Søng - a very long track name from a soundtrack album.wav'))
         shutil.copy(prepare, root)
         rows, out = run_rescan(tmp, {})
         row = rows['mus_test_utf8_01_START']
-        assert row['file'].endswith('.prepared.wav'), row
+        full = os.path.join(root, row['file'].replace('/', os.sep))
         assert row['file'].isascii(), row
-        assert os.path.exists(os.path.join(root, row['file'].replace('/', os.sep))), (row, out)
+        assert os.path.exists(full), (row, out)
+        assert len(full) < 260, f'{len(full)} chars, AudioXL cannot open it: {full}'
+        assert row['file'].startswith('prepared/'), row
 
 
 def test_script_does_not_poll():
@@ -238,7 +245,7 @@ if __name__ == '__main__':
     built = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'prepare', 'build', 'prepare.exe')
     if os.path.exists(built):
         test_prepare_normalises(built)
-        test_rescan_prepared_name_is_ascii(built)
+        test_rescan_prepared_file_is_short_and_ascii(built)
         test_prepare_handles_real_world_paths(built)
         print('ok - naming, filters and prepare.exe')
     else:

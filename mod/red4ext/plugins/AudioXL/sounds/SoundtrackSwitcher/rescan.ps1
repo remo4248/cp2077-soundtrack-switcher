@@ -31,6 +31,13 @@ if (Test-Path $stopsFile) {
     foreach ($p in $parsed.PSObject.Properties) { $stops[$p.Name] = @($p.Value) }
 }
 
+# Prepared tracks live here, one per cue, rather than beside the track they came from: AudioXL
+# opens a row with a plain CreateFileW, so a path over 260 characters cannot be read at all, and a
+# long quest folder plus a long track name passes that on its own.
+$prepDir = Join-Path $root 'prepared'
+if (-not (Test-Path -LiteralPath $prepDir)) { New-Item -ItemType Directory -Force $prepDir | Out-Null }
+$keep = @()
+
 $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -Filter 'mus_*') {
     # Any audio file in the folder is the replacement - nothing has to be renamed. original.* is the
     # game's own music, put there by the previews download, and *.prepared.wav is this script's own
@@ -73,10 +80,14 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
         continue
     }
 
-    $ready = Join-Path $dir.FullName (($file.BaseName -replace '[^A-Za-z0-9 ._-]', '_') + '.prepared.wav')
-    Get-ChildItem -LiteralPath $dir.FullName -File -Filter '*.prepared.wav' |
-        Where-Object { $_.Name -ne (Split-Path $ready -Leaf) } | Remove-Item -Force
-    $stale = (-not (Test-Path -LiteralPath $ready)) -or ((Get-Item -LiteralPath $ready).LastWriteTime -lt $file.LastWriteTime)
+    $ready = Join-Path $prepDir ($name + '.wav')
+    $stampFile = Join-Path $prepDir ($name + '.txt')
+    $keep += (Split-Path $ready -Leaf)
+    $keep += (Split-Path $stampFile -Leaf)
+    # Up to 0.4 the prepared copy sat next to the track, which is what pushed long paths past the
+    # limit AudioXL can open. Those are ours and regenerable, so they go.
+    Get-ChildItem -LiteralPath $dir.FullName -File -Filter '*.prepared.wav' | Remove-Item -Force
+
     # volume.txt holding e.g. -3 or +2 nudges this one cue, for when the measurement is not what the
     # scene wants by ear.
     $offset = 0
@@ -85,17 +96,23 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
         $parsedOffset = 0.0
         if ([double]::TryParse((Get-Content -LiteralPath $tweak -Raw).Trim(), [ref]$parsedOffset)) {
             $offset = $parsedOffset
-            if ((-not (Test-Path -LiteralPath $ready)) -or ((Get-Item -LiteralPath $tweak).LastWriteTime -gt (Get-Item -LiteralPath $ready).LastWriteTime)) {
-                $stale = $true
-            }
         }
     }
+    # One file per cue means its name no longer says which track it came from, so that goes beside
+    # it: the track, its timestamp and the offset used. Anything different and it is prepared again,
+    # which also catches a track copied in with an older timestamp than the file it replaces.
+    $stamp = "$($file.Name)|$($file.LastWriteTimeUtc.Ticks)|$offset"
+    $stale = (-not (Test-Path -LiteralPath $ready)) -or (-not (Test-Path -LiteralPath $stampFile)) -or
+             ((Get-Content -LiteralPath $stampFile -Raw).Trim() -cne $stamp)
     if ($stale) {
         if (-not (Test-Path $prepare)) {
             Write-Host "  no prepare.exe, so $($file.Name) is used as it is - add the loudness tool download next to rescan.bat to match levels" -ForegroundColor Yellow
         } else {
             $result = & $prepare $file.FullName $ready --target $target --offset $offset
             Write-Host "  $name  $result"
+            if (Test-Path -LiteralPath $ready) {
+                [IO.File]::WriteAllText($stampFile, $stamp, (New-Object Text.UTF8Encoding $false))
+            }
             $prepared++
         }
     }
@@ -106,6 +123,10 @@ $rows = foreach ($dir in Get-ChildItem -LiteralPath $root -Directory -Recurse -F
                 file = $play.Substring($root.Length + 1).Replace('\', '/') }
 }
 $rows = @($rows)
+if (Test-Path -LiteralPath $prepDir) {
+    Get-ChildItem -LiteralPath $prepDir -File | Where-Object { $keep -notcontains $_.Name } |
+        Remove-Item -Force   # a cue whose track was deleted leaves one of these behind
+}
 $json = ConvertTo-Json -InputObject ([ordered]@{ sounds = $rows }) -Depth 4
 [IO.File]::WriteAllText((Join-Path $root 'sounds.json'), $json, (New-Object Text.UTF8Encoding $false))
 
